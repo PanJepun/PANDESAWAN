@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PANDE SAWAN - Kerajinan Tangan</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Poppins,Arial,sans-serif; background:#000; color:#fff; overflow-x:hidden}
+.navbar{position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:18px 28px; background:linear-gradient(to bottom, rgba(0,0,0,.8), transparent); z-index:10}
+.logo{font-weight:800; letter-spacing:1px; font-size:18px; line-height:1}
+.logo span{display:block; font-weight:400; font-size:10px; letter-spacing:3px; opacity:.8; margin-top:4px}
+.nav-menu a{color:#fff; text-decoration:none; margin-left:26px; font-size:13px; opacity:.8}
+.nav-menu a.active{opacity:1; color:#FFB26B; border-bottom:2px solid #FFB26B; padding-bottom:2px}
+
+.hero{position:relative; width:100%; height:100vh; min-height:600px; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; background:#000}
+/* VIDEO BACKGROUND - INI YANG BENER BEB */
+.hero-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:.7}
+.hero-overlay{position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.7)); z-index:1}
+.hero-content{position:relative; z-index:2; max-width:700px; padding:20px; margin-top:40px}
+.badge{display:inline-block; border:1px solid rgba(255,178,107,.6); color:#FFB26B; font-size:10px; letter-spacing:2px; padding:7px 14px; border-radius:20px; margin-bottom:22px; background:rgba(0,0,0,.3)}
+.hero h1{font-family:Georgia, serif; font-size:52px; line-height:1.1; font-weight:700; text-shadow:0 4px 20px rgba(0,0,0,.8); margin-bottom:18px}
+.hero p{font-size:15px; line-height:1.7; opacity:.85; max-width:600px; margin:0 auto 28px}
+.search-wrap{background:#fff; border-radius:40px; padding:6px; display:flex; align-items:center; max-width:520px; margin:0 auto; box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.search-wrap i{color:#999; margin-left:18px}
+.search-wrap input{flex:1; border:none; outline:none; padding:12px 12px; font-size:13px; color:#333}
+.btn-cari{background:#0f172a; color:#fff; border:none; padding:10px 22px; border-radius:30px; font-size:12px; font-weight:700; cursor:pointer; margin-right:3px}
+.hero-actions{margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+.btn-koleksi{background:#FFB26B; color:#000; border:none; padding:13px 24px; border-radius:30px; font-size:13px; font-weight:800; cursor:pointer; display:flex; align-items:center; gap:8px}
+.btn-pande{background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.35); padding:13px 24px; border-radius:30px; font-size:13px; font-weight:700; cursor:pointer; backdrop-filter:blur(10px); display:flex; align-items:center; gap:8px}
+
+.modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:99; align-items:center; justify-content:center; padding:16px}
+.modal.show{display:flex}
+.modal-box{background:#fff; color:#000; border-radius:18px; max-width:400px; width:100%; padding:22px}
+.modal-box h3{font-size:16px; margin-bottom:10px}
+.modal-box input, .modal-box textarea{width:100%; padding:11px; border:1px solid #ddd; border-radius:10px; margin-bottom:10px; font-size:13px}
+.btn-send{width:100%; background:#0f172a; color:#fff; border:none; padding:12px; border-radius:12px; font-weight:800; cursor:pointer}
+@media(max-width:700px){.hero h1{font-size:34px}.navbar{padding:14px 16px}.nav-menu a{margin-left:14px; font-size:11px}}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">PANDE SAWAN<span>Kerajinan Tangan</span></div>
+  <div class="nav-menu">
+    <a href="index.html" class="active">Home</a>
+    <a href="Product.html">Product</a>
+    <a href="galley.html">Gallery</a>
+  </div>
+</div>
+
+<div class="hero">
+  <!-- VIDEO YANG BENER DISINI BEB -->
+  <video class="hero-video" autoplay muted loop playsinline preload="auto">
+    <source src="lempuyang.mp4" type="video/mp4">
+    <source src="./lempuyang.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  
+  <div class="hero-content">
+    <div class="badge">EST. 1960 • SAWAN, BULELENG, BALI</div>
+    <h1>Pande Buda Wage<br>Kelawu Sawan</h1>
+    <p>Warisan tempa besi turun-temurun dari Pande Sawan. Setiap bilah ditempa dengan mantra, doa, dan keahlian 60 tahun.</p>
+    
+    <div class="search-wrap">
+      <i class="fa fa-search"></i>
+      <input id="q" type="text" placeholder="Cari pisau, arit, keris, blakas..." onkeypress="if(event.key==='Enter') cari()">
+      <button class="btn-cari" onclick="cari()">Cari</button>
+    </div>
+    
+    <div class="hero-actions">
+      <button class="btn-koleksi" onclick="location.href='Product.html'">Lihat Koleksi <i class="fa fa-arrow-right"></i></button>
+      <button class="btn-pande" onclick="openFonnte()"><i class="fab fa-whatsapp"></i> Hubungi Pande</button>
+    </div>
+  </div>
+</div>
+
+<div id="fonnteModal" class="modal" onclick="if(event.target==this) closeFonnte()">
+  <div class="modal-box">
+    <h3><i class="fab fa-whatsapp"></i> Hubungi Pande via Fonnte</h3>
+    <p style="font-size:11px; color:#666; margin-bottom:12px">Pesan akan langsung masuk ke WA Pande Sawan</p>
+    <input id="f_name" placeholder="Nama Kamu">
+    <input id="f_wa" placeholder="No WA Kamu (08xx)">
+    <textarea id="f_msg">Halo Pande Sawan, saya mau tanya koleksi pisau & arit 🙏</textarea>
+    <button id="btnKirim" class="btn-send" onclick="kirimFonnteHome()">Kirim via Fonnte</button>
+    <p id="status" style="font-size:11px; text-align:center; margin-top:10px"></p>
+    <button onclick="closeFonnte()" style="width:100%; margin-top:8px; padding:10px; border:1px solid #ddd; background:#fff; border-radius:10px; cursor:pointer">Tutup</button>
+  </div>
+</div>
+
+<script>
+const WA_TOKEN = "AHdnAppaZGYiKcaWt1JH";
+const NOMOR_OWNER = "6282340152478";
+
+function cari(){
+  const q=document.getElementById('q').value.trim();
+  if(!q) return location.href='Product.html';
+  location.href=`Product.html?search=${encodeURIComponent(q)}`;
+}
+function openFonnte(){ document.getElementById('fonnteModal').classList.add('show'); }
+function closeFonnte(){ document.getElementById('fonnteModal').classList.remove('show'); }
+
+async function kirimFonnteHome(){
+  const nama=document.getElementById('f_name').value.trim();
+  const wa=document.getElementById('f_wa').value.trim();
+  const msg=document.getElementById('f_msg').value.trim();
+  if(!nama||!wa||!msg) return alert('Lengkapi dulu beb!');
+  const btn=document.getElementById('btnKirim'); const status=document.getElementById('status');
+  btn.innerText="Mengirim..."; btn.disabled=true;
+  const pesan=`📩 CHAT HOMEPAGE - PANDE SAWAN\n\nNama: ${nama}\nWA: ${wa}\nPesan: ${msg}\n\nVia Tombol Hubungi Pande (Fonnte)`;
+  try{
+    const form=new FormData(); form.append('target', NOMOR_OWNER); form.append('message', pesan);
+    const res=await fetch('https://api.fonnte.com/send',{method:'POST', headers:{'Authorization':WA_TOKEN}, body:form});
+    const data=await res.json();
+    if(data.status){
+      status.innerHTML="<span style='color:green'>✅ Terkirim ke Pande via Fonnte!</span>";
+      const form2=new FormData(); form2.append('target', wa.replace(/^0/,'62')); form2.append('message', `Halo ${nama}, pesan kamu sudah masuk ke Pande Sawan 🙏 Kami segera balas ya!`);
+      fetch('https://api.fonnte.com/send',{method:'POST', headers:{'Authorization':WA_TOKEN}, body:form2});
+    }else{ status.innerHTML="<span style='color:red'>❌ Gagal: "+(data.reason||'cek device')+"</span>"; }
+  }catch(e){ status.innerHTML="<span style='color:red'>❌ Error: "+e.message+"</span>"; }
+  btn.innerText="Kirim via Fonnte"; btn.disabled=false;
+}
+
+// pastikan video play di HP
+document.addEventListener('DOMContentLoaded', ()=>{
+  const v=document.querySelector('.hero-video');
+  if(v){ v.muted=true; v.play().catch(()=>{}); }
+});
+</script>
+</body>
+</html>

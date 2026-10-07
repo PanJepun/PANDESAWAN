@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin - Pande Sawan</title>
+<style>
+  body{font-family:Arial; background:#f5f5f5; padding:20px; max-width:600px; margin:0 auto}
+ .box{background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,.1)}
+  input, textarea, select{width:100%; padding:10px; margin:8px 0 12px; border:1px solid #ddd; border-radius:8px}
+  button{background:#0f172a; color:#fff; padding:12px; border:none; border-radius:8px; width:100%; cursor:pointer; font-weight:bold}
+  button:hover{background:orange}
+ .item{background:#f9f9f9; padding:10px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center}
+  img.thumb{width:50px; height:50px; object-fit:cover; border-radius:6px}
+</style>
+</head>
+<body>
+  <div class="box">
+    <h2>Tambah Produk Pande Sawan</h2>
+    <p style="font-size:12px; color:#666">Isi form ini, otomatis masuk ke halaman Product</p>
+
+    <input id="name" placeholder="Nama Produk (ex: Pisau Dapur Jumbo)">
+    <input id="price" type="number" placeholder="Harga (ex: 250000)">
+    <select id="icon">
+      <option value="🔪">🔪 Pisau</option>
+      <option value="🌾">🌾 Arit / Sabit</option>
+      <option value="🪓">🪓 Kapak / Blakas</option>
+      <option value="🗡️">🗡️ Keris</option>
+      <option value="✏️">✏️ Raut / Ukir</option>
+      <option value="🔨">🔨 Alat Lain</option>
+    </select>
+    <input type="file" id="imgFile" accept="image/*">
+    <textarea id="desc" placeholder="Deskripsi pendek (2 baris)"></textarea>
+    <textarea id="detail" placeholder="Detail lengkap (bahan, ukuran, dll)"></textarea>
+
+    <button onclick="saveProduct()">💾 SIMPAN PRODUK</button>
+    <br><br>
+    <a href="Product.html" style="text-align:center; display:block; color:orange">Lihat Halaman Product →</a>
+
+    <hr style="margin:20px 0">
+    <h3>Produk Tambahan Kamu:</h3>
+    <div id="list"></div>
+    <button onclick="clearAll()" style="background:#ef4444; margin-top:15px">Hapus Semua Produk Tambahan</button>
+  </div>
+
+<script>
+  function getCustom(){ return JSON.parse(localStorage.getItem('pande_custom') || '[]') }
+  function setCustom(d){ localStorage.setItem('pande_custom', JSON.stringify(d)) }
+
+  async function saveProduct(){
+    const name = document.getElementById('name').value;
+    const price = parseInt(document.getElementById('price').value);
+    const icon = document.getElementById('icon').value;
+    const desc = document.getElementById('desc').value;
+    const detail = document.getElementById('detail').value;
+    const file = document.getElementById('imgFile').files[0];
+
+    if(!name ||!price) return alert('Nama & Harga wajib isi beb!');
+
+    let imgData = "";
+    if(file){
+      imgData = await new Promise(res=>{
+        const r = new FileReader(); r.onload=e=>res(e.target.result); r.readAsDataURL(file);
+      });
+    }
+
+    const custom = getCustom();
+    custom.push({id: Date.now(), name, price, icon, img: imgData, desc, detail});
+    setCustom(custom);
+
+    alert('Berhasil disimpan beb! Cek di Product.html');
+    location.reload();
+  }
+
+  function renderList(){
+    const list = getCustom();
+    document.getElementById('list').innerHTML = list.map(p=>`
+      <div class="item">
+        <div style="display:flex; gap:10px; align-items:center">
+          ${p.img? `<img class="thumb" src="${p.img}">` : `<span style="font-size:24px">${p.icon}</span>`}
+          <div><b>${p.name}</b><br><small>Rp ${p.price.toLocaleString('id-ID')}</small></div>
+        </div>
+        <button onclick="del(${p.id})" style="width:auto; padding:6px 10px; background:#ddd; color:#000">Hapus</button>
+      </div>
+    `).join('') || '<small style="color:#999">Belum ada produk tambahan</small>';
+  }
+
+  function del(id){
+    let c = getCustom().filter(x=>x.id!==id);
+    setCustom(c); renderList();
+  }
+  function clearAll(){ if(confirm('Hapus semua?')){ localStorage.removeItem('pande_custom'); renderList(); } }
+
+  renderList();
+</script>
+</body>
+</html>
