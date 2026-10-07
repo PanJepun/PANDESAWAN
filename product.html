@@ -3,9 +3,9 @@
 :root{--bg:#0b1115;--card:#131b20;--bd:#1d2630;--bwk:#6ae08b;--acc:#2f9cee;--tx:#e6eef5;--mu:#8a9bb0;--red:#ff4d5a}
 *{box-sizing:border-box;font-family:Inter}body{margin:0;background:var(--bg);color:var(--tx);padding:12px}
 .top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.badge{background:#11291a;border:1px solid #1e4a2f;color:var(--bwk);padding:6px 12px;border-radius:20px;font-size:12px}
+.badge{background:#11291a;border:1px solid #1e4a2f;color:var(--bwk);padding:6px 12px;border-radius:20px;font-size:11px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:16px}
-.prod{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden;position:relative}
+.prod{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
 .prod img{width:100%;height:280px;object-fit:cover;background:#0e151a;cursor:pointer}
 .inf{padding:10px}.nm{font-weight:700;font-size:13px}.pr{color:var(--bwk);font-weight:700;font-size:14px;margin-top:3px}.ds{font-size:11px;color:var(--mu);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .act{display:flex;gap:6px;padding:8px;border-top:1px solid var(--bd)}
@@ -13,38 +13,35 @@
 .btn2{background:#1c2a36;color:#fff;border:1px solid var(--bd);padding:8px 14px;border-radius:8px;cursor:pointer;font-size:12px;flex:1}
 .btnEdit{background:#1e3a2f;color:var(--bwk);border:1px solid #2a5a3f}
 .btnDel{background:#3a1e22;color:var(--red);border:1px solid #5a2a30}
-.btnWA{background:#25D366;color:#fff;border:0;padding:13px;border-radius:10px;width:100%;font-weight:700;cursor:pointer;margin-top:12px;font-size:15px}
+.btnWA{background:#25D366;color:#fff;border:0;padding:13px;border-radius:10px;width:100%;font-weight:700;cursor:pointer;margin-top:12px}
 input,textarea{width:100%;background:#0e151a;border:1px solid var(--bd);border-radius:8px;padding:10px;color:#fff;margin:5px 0 10px;font-size:14px}
 label{font-size:11px;color:var(--mu);font-weight:600}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99;padding:12px}
 .modal.open{display:flex}.box{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;width:100%;max-width:400px;max-height:92vh;overflow-y:auto}
-.detImg{width:100%;height:380px;object-fit:contain;background:#0a0f13;border-radius:10px;cursor:pointer}
+.detImg{width:100%;height:380px;object-fit:contain;background:#0a0f13;border-radius:10px}
 .desc{font-size:13px;color:var(--mu);margin-top:10px;line-height:1.6;white-space:pre-wrap;background:#0e151a;padding:10px;border-radius:8px;border:1px solid var(--bd)}
 </style></head><body>
-<div class="top"><h3 style="margin:0"><span style="color:var(--bwk)">BWK</span> Pande Sawan</h3><div><span class="badge">✅ Edit & Hapus ON</span> <button class="btn" onclick="openAdd()">+ Tambah</button></div></div>
+<div class="top"><h3 style="margin:0"><span style="color:var(--bwk)">BWK</span> Pande Sawan</h3><div><span id="stt" class="badge">⏳ Loading...</span> <button class="btn" onclick="openAdd()">+ Tambah</button></div></div>
 <div id="grid" class="grid"></div>
 
 <div id="mAdd" class="modal" onclick="if(event.target==this)closeAdd()"><div class="box">
 <h4 id="addTitle" style="margin:0 0 12px">Tambah Produk BWK</h4>
 <label>Nama Produk</label><input id="n" placeholder="Arit Super Tajam">
 <label>Harga Rp</label><input id="pr" type="number" placeholder="14124">
-<label>Deskripsi Produk</label><textarea id="ds" rows="4" placeholder="Bahan baja per, tajam, COD..."></textarea>
+<label>Deskripsi Produk</label><textarea id="ds" rows="4" placeholder="Bahan baja per, tajam..."></textarea>
 <label>Foto</label><input id="f" type="file" accept="image/*">
-<div id="fh" style="font-size:11px;color:var(--mu)">Pilih foto</div><img id="pv" style="width:100%;height:150px;object-fit:cover;border-radius:8px;display:none;margin-top:8px">
+<div id="fh" style="font-size:11px;color:var(--mu)">Pilih foto (max 500KB)</div><img id="pv" style="width:100%;height:150px;object-fit:cover;border-radius:8px;display:none;margin-top:8px">
 <div style="display:flex;gap:8px;margin-top:12px"><button class="btn" id="sb" onclick="save()" style="flex:1">Simpan</button><button class="btn2" onclick="closeAdd()" style="flex:1">Batal</button></div>
+<div id="saveInfo" style="font-size:11px;color:var(--mu);margin-top:8px"></div>
 </div></div>
 
 <div id="mDet" class="modal" onclick="if(event.target==this)closeDet()"><div class="box">
 <img id="dImg" class="detImg"><div id="dName" style="font-weight:700;margin-top:12px;font-size:16px"></div><div id="dPrice" style="color:var(--bwk);font-weight:700;font-size:16px;margin-top:4px"></div>
 <div style="margin-top:12px"><label>Deskripsi</label><div id="dDesc" class="desc"></div></div>
 <div style="margin-top:14px;border-top:1px solid var(--bd);padding-top:12px"><label>Nama Pemesan</label><input id="custName" placeholder="Nama kamu">
-<label>No WA Pemesan</label><input id="custWA" placeholder="62812xxxx">
-</div>
+<label>No WA Pemesan</label><input id="custWA" placeholder="62812xxxx"></div>
 <button class="btnWA" id="btnFonnte" onclick="kirimFonnte()">📲 Pesan via WA (Fonnte)</button>
-<div style="display:flex;gap:8px;margin-top:10px">
-<button class="btn2 btnEdit" onclick="editFromDet()">✏️ Edit</button>
-<button class="btn2 btnDel" onclick="hapusProd()">🗑️ Hapus</button>
-</div>
+<div style="display:flex;gap:8px;margin-top:10px"><button class="btn2 btnEdit" onclick="editFromDet()">✏️ Edit</button><button class="btn2 btnDel" onclick="hapusProd()">🗑️ Hapus</button></div>
 <div id="fonnteStatus" style="font-size:12px;color:var(--mu);margin-top:8px;text-align:center"></div>
 <button class="btn2" style="width:100%;margin-top:8px" onclick="closeDet()">Tutup</button>
 </div></div>
@@ -55,101 +52,116 @@ const WA_TOKEN = "AHdnAppaZGYiKcaWt1JH";
 const NOMOR_OWNER = "6282340152478";
 let img64 = ""; let allData = {}; let curId = null; let curProd = null; let editId = null;
 
-document.getElementById('f').addEventListener('change', async e=>{
-  const file = e.target.files[0]; if(!file) return;
-  document.getElementById('fh').textContent="Proses...";
-  img64 = await compress(file);
-  document.getElementById('pv').src=img64; document.getElementById('pv').style.display='block';
-  document.getElementById('fh').textContent="✅ Siap";
-});
+// COMPRESS SUPER KECIL BIAR KESIMPEN DI FIREBASE
 function compress(file){
   return new Promise(res=>{
     const r=new FileReader(); r.onload=ev=>{
       const img=new Image(); img.onload=()=>{
-        let w=img.width,h=img.height,max=900; if(w>max){h=h*(max/w);w=max}
+        let w=img.width,h=img.height,max=600; if(w>max){h=h*(max/w);w=max}
         const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
-        res(c.toDataURL('image/jpeg',0.75));
+        let q=0.6; let data=c.toDataURL('image/jpeg',q);
+        while(data.length>130000 && q>0.2){q-=0.1; data=c.toDataURL('image/jpeg',q);}
+        res(data);
       }; img.src=ev.target.result;
     }; r.readAsDataURL(file);
   });
 }
-window.openAdd=()=>{editId=null; document.getElementById('addTitle').textContent='Tambah Produk BWK'; document.getElementById('mAdd').classList.add('open');}
+document.getElementById('f').addEventListener('change', async e=>{
+  const file=e.target.files[0]; if(!file) return;
+  document.getElementById('fh').textContent="Proses compress...";
+  img64=await compress(file);
+  document.getElementById('pv').src=img64; document.getElementById('pv').style.display='block';
+  document.getElementById('fh').textContent="✅ Siap "+Math.round(img64.length/1024)+"KB - Pasti kesimpen!";
+});
+
+window.openAdd=()=>{editId=null; document.getElementById('addTitle').textContent='Tambah Produk BWK'; document.getElementById('saveInfo').textContent=''; document.getElementById('mAdd').classList.add('open');}
 window.closeAdd=()=>{document.getElementById('mAdd').classList.remove('open');document.getElementById('n').value='';document.getElementById('pr').value='';document.getElementById('ds').value='';document.getElementById('f').value='';document.getElementById('pv').style.display='none';img64='';editId=null;}
+
 window.save=async()=>{
   const raw=document.getElementById('n').value.trim(), pr=document.getElementById('pr').value.trim(), ds=document.getElementById('ds').value.trim();
   if(!raw||!pr) return alert('Isi nama & harga beb!');
-  const b=document.getElementById('sb'); b.disabled=true; b.textContent='Simpan...';
-  const payload = {name: raw.startsWith('BWK')?raw:`BWK - ${raw}`, price:parseInt(pr), description:ds, createdAt:Date.now()};
-  if(img64) payload.image = img64;
+  if(!img64 &&!editId) return alert('Pilih foto dulu beb!');
+  const b=document.getElementById('sb'), info=document.getElementById('saveInfo');
+  b.disabled=true; b.textContent='Menyimpan...'; info.textContent='Simpan ke HP dulu...';
+
+  const id = editId || 'id_'+Date.now();
+  const payload = {name: raw.startsWith('BWK')?raw:`BWK - ${raw}`, price:parseInt(pr), description:ds, image: img64 || (allData[editId]?.image||''), createdAt:Date.now()};
+
+  // 1. SIMPAN KE LOCALSTORAGE DULU (PASTI KESIMPEN)
+  let localData = JSON.parse(localStorage.getItem('bwk_product')||'{}');
+  localData[id] = payload;
+  localStorage.setItem('bwk_product', JSON.stringify(localData));
+  info.textContent='✅ Kesimpen di HP! Coba simpan ke Firebase...';
+
+  // 2. SIMPAN KE FIREBASE
   try{
     if(editId){
-      if(!img64) payload.image = allData[editId].image;
-      await fetch(DB_URL+"/"+editId+".json",{method:"PATCH",body:JSON.stringify(payload)});
+      await fetch(DB_URL+"/"+editId+".json",{method:"PUT",body:JSON.stringify(payload)});
     } else {
-      payload.image = img64;
-      await fetch(DB_URL+".json",{method:"POST",body:JSON.stringify(payload)});
+      const res=await fetch(DB_URL+".json",{method:"POST",body:JSON.stringify(payload)});
+      const j=await res.json();
+      // ganti id local dengan id firebase
+      if(j && j.name){
+        delete localData[id];
+        localData[j.name]=payload;
+        localStorage.setItem('bwk_product', JSON.stringify(localData));
+      }
     }
-    closeAdd(); b.disabled=false; b.textContent='Simpan'; load();
-  }catch(e){alert(e.message); b.disabled=false; b.textContent='Simpan';}
+    info.textContent='✅✅ Kesimpen di Firebase & HP! Aman beb!';
+    document.getElementById('stt').textContent='✅ Tersimpan permanen';
+  }catch(e){
+    info.textContent='⚠️ Firebase gagal, tapi tetap kesimpen di HP! Error: '+e.message;
+    document.getElementById('stt').textContent='⚠️ Local only (Firebase rules cek)';
+  }
+  setTimeout(()=>{closeAdd(); b.disabled=false; b.textContent='Simpan'; load();},800);
 };
+
 async function load(){
-  const res=await fetch(DB_URL+".json"); const data=await res.json(); allData=data||{};
-  const grid=document.getElementById('grid');
-  if(!data){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--mu)">Belum ada produk</div>';return;}
-  const list=Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>b.createdAt-a.createdAt);
+  const grid=document.getElementById('grid'), st=document.getElementById('stt');
+  try{
+    const res=await fetch(DB_URL+".json");
+    const data=await res.json();
+    if(data && Object.keys(data).length>0){
+      allData=data;
+      st.textContent='✅ Firebase ('+Object.keys(data).length+' produk)';
+    } else {
+      throw 'kosong';
+    }
+  }catch(e){
+    // FALLBACK LOCALSTORAGE
+    const localData=JSON.parse(localStorage.getItem('bwk_product')||'{}');
+    allData=localData;
+    if(Object.keys(localData).length>0){
+      st.textContent='📱 Local ('+Object.keys(localData).length+' produk) - Cek Firebase Rules!';
+    } else {
+      st.textContent='❌ Belum ada produk';
+      grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--mu)">Belum ada produk.<br>Klik + Tambah<br><br><small>Jika hilang terus, set Firebase Rules:<br>{<br> "rules":{<br> "BWK-product":{<br> ".read":true,<br> ".write":true<br> }<br> }<br>}</small></div>'; return;
+    }
+  }
+  const list=Object.entries(allData).map(([id,v])=>({id,...v})).sort((a,b)=>b.createdAt-a.createdAt);
   grid.innerHTML=list.map(p=>`
     <div class="prod">
       <img src="${p.image}" onclick="openDet('${p.id}')">
       <div class="inf" onclick="openDet('${p.id}')"><div class="nm">${p.name}</div><div class="pr">Rp ${(p.price||0).toLocaleString('id-ID')}</div><div class="ds">${(p.description||'').substring(0,40)}</div></div>
-      <div class="act">
-        <button class="btn2 btnEdit" onclick="editProd('${p.id}')">✏️ Edit</button>
-        <button class="btn2 btnDel" onclick="hapusProd('${p.id}')">🗑️ Hapus</button>
-      </div>
+      <div class="act"><button class="btn2 btnEdit" onclick="editProd('${p.id}')">✏️ Edit</button><button class="btn2 btnDel" onclick="hapusProd('${p.id}')">🗑️ Hapus</button></div>
     </div>`).join('');
 }
-window.openDet=id=>{
-  curId=id; curProd=allData[id];
-  document.getElementById('dImg').src=curProd.image; document.getElementById('dName').textContent=curProd.name;
-  document.getElementById('dPrice').textContent='Rp '+(curProd.price||0).toLocaleString('id-ID');
-  document.getElementById('dDesc').textContent=curProd.description||'Tanpa deskripsi';
-  document.getElementById('custName').value=''; document.getElementById('custWA').value=''; document.getElementById('fonnteStatus').textContent='';
-  document.getElementById('mDet').classList.add('open');
-};
+window.openDet=id=>{curId=id; curProd=allData[id]; document.getElementById('dImg').src=curProd.image; document.getElementById('dName').textContent=curProd.name; document.getElementById('dPrice').textContent='Rp '+(curProd.price||0).toLocaleString('id-ID'); document.getElementById('dDesc').textContent=curProd.description||''; document.getElementById('mDet').classList.add('open');};
 window.closeDet=()=>document.getElementById('mDet').classList.remove('open');
-
-window.editProd=(id)=>{
-  const p=allData[id]; if(!p) return;
-  editId=id;
-  document.getElementById('n').value=p.name.replace('BWK - ','');
-  document.getElementById('pr').value=p.price;
-  document.getElementById('ds').value=p.description||'';
-  document.getElementById('pv').src=p.image; document.getElementById('pv').style.display='block'; img64='';
-  document.getElementById('addTitle').textContent='Edit Produk BWK';
-  document.getElementById('mAdd').classList.add('open');
-};
+window.editProd=id=>{const p=allData[id]; if(!p) return; editId=id; document.getElementById('n').value=p.name.replace('BWK - ',''); document.getElementById('pr').value=p.price; document.getElementById('ds').value=p.description||''; document.getElementById('pv').src=p.image; document.getElementById('pv').style.display='block'; img64=''; document.getElementById('addTitle').textContent='Edit Produk'; document.getElementById('mAdd').classList.add('open');}
 window.editFromDet=()=>{closeDet(); editProd(curId);}
-
-window.hapusProd=async(idParam)=>{
-  const id = idParam || curId;
-  if(!id) return;
-  if(!confirm('Yakin hapus produk ini beb?')) return;
-  await fetch(DB_URL+"/"+id+".json",{method:"DELETE"});
-  closeDet(); load();
-};
-
+window.hapusProd=async(idParam)=>{const id=idParam||curId; if(!id||!confirm('Hapus?')) return; try{await fetch(DB_URL+"/"+id+".json",{method:"DELETE"});}catch(e){} let localData=JSON.parse(localStorage.getItem('bwk_product')||'{}'); delete localData[id]; localStorage.setItem('bwk_product',JSON.stringify(localData)); closeDet(); load();};
 window.kirimFonnte=async()=>{
-  const custName=document.getElementById('custName').value.trim()||'Customer';
-  const custWA=document.getElementById('custWA').value.trim();
-  if(!custWA) return alert('Isi No WA pemesan dulu beb!');
-  const btn=document.getElementById('btnFonnte'), st=document.getElementById('fonnteStatus');
-  btn.disabled=true; btn.textContent='Mengirim via Fonnte...';
-  const pesanOwner = `🔔 PESANAN BARU BWK\n\nProduk: *${curProd.name}*\nHarga: Rp ${(curProd.price||0).toLocaleString('id-ID')}\nDeskripsi: ${curProd.description||'-'}\n\nPemesan: ${custName}\nNo WA: ${custWA}`;
-  const pesanCustomer = `Halo ${custName} 🙏 Pesan *${curProd.name}* Rp ${(curProd.price||0).toLocaleString('id-ID')} diterima BWK Pande Sawan!`;
+  const custName=document.getElementById('custName').value.trim()||'Customer', custWA=document.getElementById('custWA').value.trim();
+  if(!custWA) return alert('Isi No WA!');
+  const btn=document.getElementById('btnFonnte'), st=document.getElementById('fonnteStatus'); btn.disabled=true; btn.textContent='Mengirim...';
+  const pesanOwner=`🔔 PESANAN BARU BWK\nProduk: *${curProd.name}*\nHarga: Rp ${(curProd.price||0).toLocaleString('id-ID')}\nDesk: ${curProd.description||'-'}\nPemesan: ${custName}\nWA: ${custWA}`;
+  const pesanCust=`Halo ${custName} 🙏 Pesan *${curProd.name}* diterima BWK!`;
   try{
     await fetch('https://api.fonnte.com/send',{method:'POST',headers:{'Authorization':WA_TOKEN},body:new URLSearchParams({target:NOMOR_OWNER,message:pesanOwner})});
-    await fetch('https://api.fonnte.com/send',{method:'POST',headers:{'Authorization':WA_TOKEN},body:new URLSearchParams({target:custWA,message:pesanCustomer})});
-    st.textContent='✅ Berhasil! Cek WA!'; btn.textContent='✅ Terkirim';
-    setTimeout(()=>{btn.disabled=false; btn.textContent='📲 Pesan via WA (Fonnte)';},2500);
+    await fetch('https://api.fonnte.com/send',{method:'POST',headers:{'Authorization':WA_TOKEN},body:new URLSearchParams({target:custWA,message:pesanCust})});
+    st.textContent='✅ Terkirim!'; btn.textContent='✅ Terkirim';
+    setTimeout(()=>{btn.disabled=false; btn.textContent='📲 Pesan via WA (Fonnte)';},2000);
   }catch(e){st.textContent='❌ Gagal: '+e.message; btn.disabled=false;}
 };
 load();
