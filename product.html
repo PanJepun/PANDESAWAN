@@ -1,102 +1,156 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BWK • Pande Sawan Firebase</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0b1115;--card:#131b20;--border:#1d2630;--accent:#2f9cee;--bwk:#6ae08b;--text:#e6eef5;--muted:#8a9bb0}
-*{box-sizing:border-box;font-family:Inter,system-ui}body{margin:0;background:var(--bg);color:var(--text);padding:24px}
-.header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px}
-.header h1{font-size:20px;margin:0}.header h1 span{color:var(--bwk)}
-.badge{background:#11291a;border:1px solid #1e4a2f;color:var(--bwk);padding:4px 10px;border-radius:20px;font-size:12px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px}
-.prod{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.prod img{width:100%;height:180px;object-fit:cover;background:#0e151a}
-.prod.info{padding:12px}.prod.name{font-weight:700;font-size:14px;margin:0 0 4px}.prod.price{color:var(--bwk);font-weight:600}
-.btn{background:var(--accent);color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:600}
-.btn-sec{background:#1c2a36;color:var(--text);border:1px solid var(--border)}
-input{width:100%;background:#0e151a;border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);margin:6px 0 12px}
-label{font-size:12px;color:var(--muted);font-weight:600}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
-.modal.open{display:flex}.modal-box{background:#131b20;border:1px solid var(--border);border-radius:14px;padding:20px;width:100%;max-width:420px}
-.hint{font-size:11px;color:var(--muted)}
-</style>
-</head>
-<body>
-<div class="header">
-<h1><span>BWK</span> • Pande Sawan</h1>
-<div><span class="badge" id="status">✅ Firebase Connected</span>
-<button class="btn" onclick="openModal()">+ Tambah</button>
-<a href="index.html" class="btn btn-sec" style="text-decoration:none;margin-left:6px">Home</a></div>
-</div>
-<div id="productGrid" class="grid"></div>
-<div id="modal" class="modal" onclick="if(event.target==this)closeModal()">
-<div class="modal-box">
-<h3 style="margin:0 0 12px">Tambah Produk BWK</h3>
-<label>Nama Produk (auto jadi BWK -...)</label>
-<input id="pName" placeholder="Arit Baja Super">
-<label>Harga Rp</label>
-<input id="pPrice" type="number" placeholder="150000">
-<label>Foto (Choose File max 500KB auto kompres)</label>
-<input id="pFile" type="file" accept="image/*">
-<div class="hint" id="fileHint">Pilih foto, >500KB auto kompres</div>
-<img id="preview" style="width:100%;height:150px;object-fit:cover;border-radius:8px;display:none;margin-top:8px">
-<div style="display:flex;gap:10px;margin-top:16px">
-<button class="btn" id="saveBtn" onclick="saveProduct()" style="flex:1">Simpan ke Firebase</button>
-<button class="btn btn-sec" onclick="closeModal()" style="flex:1">Batal</button>
-</div><div id="saveStatus" class="hint" style="margin-top:10px"></div>
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BWK - Pande Sawan</title><style>
+:root{--bg:#0b1115;--card:#131b20;--bd:#1d2630;--bwk:#6ae08b;--acc:#2f9cee;--tx:#e6eef5;--mu:#8a9bb0;--red:#ff4d5a}
+*{box-sizing:border-box;font-family:Inter}body{margin:0;background:var(--bg);color:var(--tx);padding:12px}
+.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.badge{background:#11291a;border:1px solid #1e4a2f;color:var(--bwk);padding:6px 12px;border-radius:20px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:16px}
+.prod{background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden;position:relative}
+.prod img{width:100%;height:280px;object-fit:cover;background:#0e151a;cursor:pointer}
+.inf{padding:10px}.nm{font-weight:700;font-size:13px}.pr{color:var(--bwk);font-weight:700;font-size:14px;margin-top:3px}.ds{font-size:11px;color:var(--mu);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.act{display:flex;gap:6px;padding:8px;border-top:1px solid var(--bd)}
+.btn{background:var(--acc);color:#fff;border:0;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px}
+.btn2{background:#1c2a36;color:#fff;border:1px solid var(--bd);padding:8px 14px;border-radius:8px;cursor:pointer;font-size:12px;flex:1}
+.btnEdit{background:#1e3a2f;color:var(--bwk);border:1px solid #2a5a3f}
+.btnDel{background:#3a1e22;color:var(--red);border:1px solid #5a2a30}
+.btnWA{background:#25D366;color:#fff;border:0;padding:13px;border-radius:10px;width:100%;font-weight:700;cursor:pointer;margin-top:12px;font-size:15px}
+input,textarea{width:100%;background:#0e151a;border:1px solid var(--bd);border-radius:8px;padding:10px;color:#fff;margin:5px 0 10px;font-size:14px}
+label{font-size:11px;color:var(--mu);font-weight:600}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99;padding:12px}
+.modal.open{display:flex}.box{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;width:100%;max-width:400px;max-height:92vh;overflow-y:auto}
+.detImg{width:100%;height:380px;object-fit:contain;background:#0a0f13;border-radius:10px;cursor:pointer}
+.desc{font-size:13px;color:var(--mu);margin-top:10px;line-height:1.6;white-space:pre-wrap;background:#0e151a;padding:10px;border-radius:8px;border:1px solid var(--bd)}
+</style></head><body>
+<div class="top"><h3 style="margin:0"><span style="color:var(--bwk)">BWK</span> Pande Sawan</h3><div><span class="badge">✅ Edit & Hapus ON</span> <button class="btn" onclick="openAdd()">+ Tambah</button></div></div>
+<div id="grid" class="grid"></div>
+
+<div id="mAdd" class="modal" onclick="if(event.target==this)closeAdd()"><div class="box">
+<h4 id="addTitle" style="margin:0 0 12px">Tambah Produk BWK</h4>
+<label>Nama Produk</label><input id="n" placeholder="Arit Super Tajam">
+<label>Harga Rp</label><input id="pr" type="number" placeholder="14124">
+<label>Deskripsi Produk</label><textarea id="ds" rows="4" placeholder="Bahan baja per, tajam, COD..."></textarea>
+<label>Foto</label><input id="f" type="file" accept="image/*">
+<div id="fh" style="font-size:11px;color:var(--mu)">Pilih foto</div><img id="pv" style="width:100%;height:150px;object-fit:cover;border-radius:8px;display:none;margin-top:8px">
+<div style="display:flex;gap:8px;margin-top:12px"><button class="btn" id="sb" onclick="save()" style="flex:1">Simpan</button><button class="btn2" onclick="closeAdd()" style="flex:1">Batal</button></div>
 </div></div>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyD6rIm0FmOgIioG2UCwQ2xQtJHqj5i1I",
-  authDomain: "restopro2026-60038.firebaseapp.com",
-  databaseURL: "https://restopro2026-60038-default-rtdb.asia-southeast1.firebaseapp.com",
-  projectId: "restopro2026-60038",
-  storageBucket: "restopro2026-60038.firebasestorage.app",
-  messagingSenderId: "336434967293",
-  appId: "1:336434967293:web:ba55b927cd01aa0229c494"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const storage = getStorage(app);
-const productsRef = ref(db, 'bwk_products');
-let compressedFile=null;let previewDataUrl="";
-const pFile=document.getElementById('pFile');const preview=document.getElementById('preview');const fileHint=document.getElementById('fileHint');
-pFile.addEventListener('change', async (e)=>{
-  const file=e.target.files[0];if(!file)return;
-  fileHint.textContent=`Memproses ${(file.size/1024).toFixed(0)}KB...`;
-  const result=await compressImage(file,500);
-  compressedFile=result.file;previewDataUrl=result.dataUrl;
-  preview.src=previewDataUrl;preview.style.display='block';
-  fileHint.textContent=`✅ Siap: ${(compressedFile.size/1024).toFixed(0)}KB dari ${(file.size/1024).toFixed(0)}KB`;
+
+<div id="mDet" class="modal" onclick="if(event.target==this)closeDet()"><div class="box">
+<img id="dImg" class="detImg"><div id="dName" style="font-weight:700;margin-top:12px;font-size:16px"></div><div id="dPrice" style="color:var(--bwk);font-weight:700;font-size:16px;margin-top:4px"></div>
+<div style="margin-top:12px"><label>Deskripsi</label><div id="dDesc" class="desc"></div></div>
+<div style="margin-top:14px;border-top:1px solid var(--bd);padding-top:12px"><label>Nama Pemesan</label><input id="custName" placeholder="Nama kamu">
+<label>No WA Pemesan</label><input id="custWA" placeholder="62812xxxx">
+</div>
+<button class="btnWA" id="btnFonnte" onclick="kirimFonnte()">📲 Pesan via WA (Fonnte)</button>
+<div style="display:flex;gap:8px;margin-top:10px">
+<button class="btn2 btnEdit" onclick="editFromDet()">✏️ Edit</button>
+<button class="btn2 btnDel" onclick="hapusProd()">🗑️ Hapus</button>
+</div>
+<div id="fonnteStatus" style="font-size:12px;color:var(--mu);margin-top:8px;text-align:center"></div>
+<button class="btn2" style="width:100%;margin-top:8px" onclick="closeDet()">Tutup</button>
+</div></div>
+
+<script>
+const DB_URL = "https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-product";
+const WA_TOKEN = "AHdnAppaZGYiKcaWt1JH";
+const NOMOR_OWNER = "6282340152478";
+let img64 = ""; let allData = {}; let curId = null; let curProd = null; let editId = null;
+
+document.getElementById('f').addEventListener('change', async e=>{
+  const file = e.target.files[0]; if(!file) return;
+  document.getElementById('fh').textContent="Proses...";
+  img64 = await compress(file);
+  document.getElementById('pv').src=img64; document.getElementById('pv').style.display='block';
+  document.getElementById('fh').textContent="✅ Siap";
 });
-async function compressImage(file,maxKB){const maxBytes=maxKB*1024;let quality=0.9;let width=1024;let dataUrl=await fileToDataUrl(file);if(file.size<=maxBytes){const blob=await dataUrlToBlob(dataUrl,0.85,width);if(blob.size<=maxBytes)return{file:new File([blob],file.name,{type:'image/jpeg'}),dataUrl:await blobToDataUrl(blob)}}for(let i=0;i<6;i++){const blob=await dataUrlToBlob(dataUrl,quality,width);if(blob.size<=maxBytes||(quality<0.4&&width<600)){return{file:new File([blob],file.name.replace(/\..+$/,'.jpg'),{type:'image/jpeg'}),dataUrl:await blobToDataUrl(blob)}}quality-=0.15;if(quality<0.5)width=Math.floor(width*0.8)}const finalBlob=await dataUrlToBlob(dataUrl,0.5,600);return{file:new File([finalBlob],file.name.replace(/\..+$/,'.jpg'),{type:'image/jpeg'}),dataUrl:await blobToDataUrl(finalBlob)}}
-function fileToDataUrl(file){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(file)})}
-function blobToDataUrl(blob){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(blob)})}
-function dataUrlToBlob(dataUrl,quality,maxWidth){return new Promise(resolve=>{const img=new Image();img.onload=()=>{let w=img.width,h=img.height;if(w>maxWidth){h=h*(maxWidth/w);w=maxWidth}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);canvas.toBlob(b=>resolve(b),'image/jpeg',quality)};img.src=dataUrl})}
-window.openModal=()=>{document.getElementById('modal').classList.add('open')}
-window.closeModal=()=>{document.getElementById('modal').classList.remove('open');document.getElementById('pName').value='';document.getElementById('pPrice').value='';document.getElementById('pFile').value='';preview.style.display='none';fileHint.textContent='Pilih foto, >500KB auto kompres';compressedFile=null;document.getElementById('saveStatus').textContent=''}
-window.saveProduct=async()=>{
-  const nameRaw=document.getElementById('pName').value.trim();const price=document.getElementById('pPrice').value.trim();
-  if(!nameRaw){alert('Isi nama dulu beb!');return}if(!price){alert('Isi harga beb!');return}
-  const saveBtn=document.getElementById('saveBtn');const saveStatus=document.getElementById('saveStatus');
-  saveBtn.disabled=true;saveBtn.textContent='Uploading...';
-  try{
-    let imageUrl="";if(compressedFile){const storagePath=`bwk_products/${Date.now()}_${compressedFile.name}`;const storageRef=sRef(storage,storagePath);await uploadBytes(storageRef,compressedFile);imageUrl=await getDownloadURL(storageRef)}
-    const finalName=`BWK - ${nameRaw}`;const newRef=push(productsRef);
-    await set(newRef,{name:finalName,rawName:nameRaw,price:parseInt(price),imageUrl:imageUrl,imagePreview:imageUrl?"":previewDataUrl,createdAt:Date.now()});
-    saveStatus.textContent="✅ Berhasil: "+finalName;setTimeout(()=>{closeModal();saveBtn.disabled=false;saveBtn.textContent='Simpan ke Firebase'},1000);
-  }catch(err){
-    console.error(err);if(previewDataUrl){try{const newRef=push(productsRef);await set(newRef,{name:`BWK - ${nameRaw}`,rawName:nameRaw,price:parseInt(price),imageUrl:"",imagePreview:previewDataUrl,createdAt:Date.now()});saveStatus.textContent="✅ Save base64 (Storage butuh rules)";setTimeout(()=>{closeModal();saveBtn.disabled=false;saveBtn.textContent='Simpan ke Firebase'},1000);return}catch(e2){}}
-    saveStatus.textContent="❌ "+err.message;saveBtn.disabled=false;saveBtn.textContent='Simpan ke Firebase';
-  }
+function compress(file){
+  return new Promise(res=>{
+    const r=new FileReader(); r.onload=ev=>{
+      const img=new Image(); img.onload=()=>{
+        let w=img.width,h=img.height,max=900; if(w>max){h=h*(max/w);w=max}
+        const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+        res(c.toDataURL('image/jpeg',0.75));
+      }; img.src=ev.target.result;
+    }; r.readAsDataURL(file);
+  });
 }
-function render(products){const grid=document.getElementById('productGrid');if(!products.length){grid.innerHTML=`<div style='grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)'>Belum ada produk BWK</div>`;return}grid.innerHTML=products.map(p=>`<div class="prod"><img src="${p.imageUrl||p.imagePreview||'https://via.placeholder.com/300?text=BWK'}" onerror="this.src='https://via.placeholder.com/300?text=BWK'"><div class="info"><p class="name">${p.name}</p><p class="price">Rp ${(p.price||0).toLocaleString('id-ID')}</p><button class="btn btn-sec" style="width:100%;margin-top:8px;font-size:12px" onclick="deleteProduct('${p.id}')">🗑️ Hapus</button></div></div>`).join('')}
-onValue(productsRef,(snapshot)=>{const data=snapshot.val();if(!data){render([]);return}const list=Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>b.createdAt-a.createdAt);render(list)});
-window.deleteProduct=async(id)=>{if(!confirm('Hapus?'))return;await remove(ref(db,`bwk_products/${id}`))}
+window.openAdd=()=>{editId=null; document.getElementById('addTitle').textContent='Tambah Produk BWK'; document.getElementById('mAdd').classList.add('open');}
+window.closeAdd=()=>{document.getElementById('mAdd').classList.remove('open');document.getElementById('n').value='';document.getElementById('pr').value='';document.getElementById('ds').value='';document.getElementById('f').value='';document.getElementById('pv').style.display='none';img64='';editId=null;}
+window.save=async()=>{
+  const raw=document.getElementById('n').value.trim(), pr=document.getElementById('pr').value.trim(), ds=document.getElementById('ds').value.trim();
+  if(!raw||!pr) return alert('Isi nama & harga beb!');
+  const b=document.getElementById('sb'); b.disabled=true; b.textContent='Simpan...';
+  const payload = {name: raw.startsWith('BWK')?raw:`BWK - ${raw}`, price:parseInt(pr), description:ds, createdAt:Date.now()};
+  if(img64) payload.image = img64;
+  try{
+    if(editId){
+      if(!img64) payload.image = allData[editId].image;
+      await fetch(DB_URL+"/"+editId+".json",{method:"PATCH",body:JSON.stringify(payload)});
+    } else {
+      payload.image = img64;
+      await fetch(DB_URL+".json",{method:"POST",body:JSON.stringify(payload)});
+    }
+    closeAdd(); b.disabled=false; b.textContent='Simpan'; load();
+  }catch(e){alert(e.message); b.disabled=false; b.textContent='Simpan';}
+};
+async function load(){
+  const res=await fetch(DB_URL+".json"); const data=await res.json(); allData=data||{};
+  const grid=document.getElementById('grid');
+  if(!data){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--mu)">Belum ada produk</div>';return;}
+  const list=Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>b.createdAt-a.createdAt);
+  grid.innerHTML=list.map(p=>`
+    <div class="prod">
+      <img src="${p.image}" onclick="openDet('${p.id}')">
+      <div class="inf" onclick="openDet('${p.id}')"><div class="nm">${p.name}</div><div class="pr">Rp ${(p.price||0).toLocaleString('id-ID')}</div><div class="ds">${(p.description||'').substring(0,40)}</div></div>
+      <div class="act">
+        <button class="btn2 btnEdit" onclick="editProd('${p.id}')">✏️ Edit</button>
+        <button class="btn2 btnDel" onclick="hapusProd('${p.id}')">🗑️ Hapus</button>
+      </div>
+    </div>`).join('');
+}
+window.openDet=id=>{
+  curId=id; curProd=allData[id];
+  document.getElementById('dImg').src=curProd.image; document.getElementById('dName').textContent=curProd.name;
+  document.getElementById('dPrice').textContent='Rp '+(curProd.price||0).toLocaleString('id-ID');
+  document.getElementById('dDesc').textContent=curProd.description||'Tanpa deskripsi';
+  document.getElementById('custName').value=''; document.getElementById('custWA').value=''; document.getElementById('fonnteStatus').textContent='';
+  document.getElementById('mDet').classList.add('open');
+};
+window.closeDet=()=>document.getElementById('mDet').classList.remove('open');
+
+window.editProd=(id)=>{
+  const p=allData[id]; if(!p) return;
+  editId=id;
+  document.getElementById('n').value=p.name.replace('BWK - ','');
+  document.getElementById('pr').value=p.price;
+  document.getElementById('ds').value=p.description||'';
+  document.getElementById('pv').src=p.image; document.getElementById('pv').style.display='block'; img64='';
+  document.getElementById('addTitle').textContent='Edit Produk BWK';
+  document.getElementById('mAdd').classList.add('open');
+};
+window.editFromDet=()=>{closeDet(); editProd(curId);}
+
+window.hapusProd=async(idParam)=>{
+  const id = idParam || curId;
+  if(!id) return;
+  if(!confirm('Yakin hapus produk ini beb?')) return;
+  await fetch(DB_URL+"/"+id+".json",{method:"DELETE"});
+  closeDet(); load();
+};
+
+window.kirimFonnte=async()=>{
+  const custName=document.getElementById('custName').value.trim()||'Customer';
+  const custWA=document.getElementById('custWA').value.trim();
+  if(!custWA) return alert('Isi No WA pemesan dulu beb!');
+  const btn=document.getElementById('btnFonnte'), st=document.getElementById('fonnteStatus');
+  btn.disabled=true; btn.textContent='Mengirim via Fonnte...';
+  const pesanOwner = `🔔 PESANAN BARU BWK\n\nProduk: *${curProd.name}*\nHarga: Rp ${(curProd.price||0).toLocaleString('id-ID')}\nDeskripsi: ${curProd.description||'-'}\n\nPemesan: ${custName}\nNo WA: ${custWA}`;
+  const pesanCustomer = `Halo ${custName} 🙏 Pesan *${curProd.name}* Rp ${(curProd.price||0).toLocaleString('id-ID')} diterima BWK Pande Sawan!`;
+  try{
+    await fetch('https://api.fonnte.com/send',{method:'POST',headers:{'Authorization':WA_TOKEN},body:new URLSearchParams({target:NOMOR_OWNER,message:pesanOwner})});
+    await fetch('https://api.fonnte.com/send',{method:'POST',headers:{'Authorization':WA_TOKEN},body:new URLSearchParams({target:custWA,message:pesanCustomer})});
+    st.textContent='✅ Berhasil! Cek WA!'; btn.textContent='✅ Terkirim';
+    setTimeout(()=>{btn.disabled=false; btn.textContent='📲 Pesan via WA (Fonnte)';},2500);
+  }catch(e){st.textContent='❌ Gagal: '+e.message; btn.disabled=false;}
+};
+load();
 </script></body></html>
