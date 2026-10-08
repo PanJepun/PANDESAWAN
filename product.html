@@ -1,24 +1,26 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BWK Pande Sawan - Product</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--card:rgba(21,29,35,.88);--bd:rgba(255,255,255,.18);--bwk:#4ade80;--tx:#e2e8f0;--mu:#94a3b8}
-*{box-sizing:border-box;font-family:Inter,system-ui}body{margin:0;background:#000;color:var(--tx)}
+*{box-sizing:border-box;font-family:'Inter',system-ui}body{margin:0;background:#000;color:var(--tx);overflow-x:hidden}
 .bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;opacity:.85}
 .bg-overlay{position:fixed;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.10), rgba(0,0,0,.30));z-index:-1}
 .header{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.45);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:20}
+.logo{font-weight:800;font-size:15px}.logo span{color:var(--bwk)}
 .searchSection{padding:16px;display:flex;justify-content:center}
 .searchWrap{display:flex;align-items:center;background:#fff;border-radius:999px;padding:5px 6px 5px 16px;width:100%;max-width:580px;box-shadow:0 8px 30px rgba(0,0,0,.4)}
 .searchWrap input{flex:1;border:0;outline:none;background:transparent;color:#0f172a;font-size:14px;padding:9px 0}
 .btnCari{background:#0f172a;color:#fff;border:0;padding:10px 22px;border-radius:999px;font-weight:700;cursor:pointer}
-.catBar{display:flex;gap:8px;padding:0 12px 10px;overflow-x:auto}.catBar::-webkit-scrollbar{display:none}
+.catBar{display:flex;gap:8px;padding:0 12px 10px;overflow-x:auto;scrollbar-width:none}.catBar::-webkit-scrollbar{display:none}
 .catBtn{white-space:nowrap;padding:8px 16px;border-radius:999px;border:1px solid var(--bd);background:rgba(17,24,32,.65);backdrop-filter:blur(8px);color:var(--mu);cursor:pointer;font-size:13px}
 .catBtn.active{background:var(--bwk);color:#052e16;border-color:var(--bwk);font-weight:800}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
-@media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr)}}
-.prod{background:var(--card);backdrop-filter:blur(14px);border:1px solid var(--bd);border-radius:16px;overflow:hidden;transition:.25s}
-.prod img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+@media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr);padding:16px}}
+.prod{background:var(--card);backdrop-filter:blur(14px);border:1px solid var(--bd);border-radius:16px;overflow:hidden;cursor:pointer}
+.prod img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#0e151a}
 .inf{padding:10px 12px 8px}.catTag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;display:inline-block;margin-bottom:5px;background:rgba(30,58,138,.7);color:#93c5fd}
-.catTag.Arit{background:rgba(20,83,45,.7);color:#86efac}.nm{font-weight:700;font-size:13px}.pr{color:var(--bwk);font-weight:800;font-size:13px;margin-top:4px}.stok{font-size:11px;color:var(--mu)}
+.nm{font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pr{color:var(--bwk);font-weight:800;font-size:13px;margin-top:4px}.stok{font-size:11px;color:var(--mu)}
 .act{display:flex;gap:8px;padding:8px 10px 10px;border-top:1px solid var(--bd)}
 .btnEdit{flex:1;background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.35);color:#4ade80;padding:7px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700}
 .btnDel{flex:1;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.28);color:#fca5a5;padding:7px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700}
@@ -32,27 +34,52 @@ label{font-size:11px;color:#94a3b8}input,textarea,select{width:100%;background:#
 .btnWA{background:#22c55e;color:#fff;border:0;padding:14px;border-radius:12px;width:100%;font-weight:800;cursor:pointer;margin-top:14px}
 @media(max-width:600px){.addLayout,.detLayout{flex-direction:row}.addRight{width:130px}.addRight img{height:160px}.detImg{width:48%;height:200px}}
 </style></head><body>
+
 <video class="bg-video" autoplay muted loop playsinline><source src="lempuyang.mp4" type="video/mp4"></video>
 <div class="bg-overlay"></div>
-<div class="header"><div style="font-weight:800"><span style="color:#4ade80">BWK</span> Pande Sawan</div><div style="display:flex;gap:14px;align-items:center"><span id="stt" style="font-size:11px;color:#94a3b8"></span><a href="index.html" style="color:#fff;text-decoration:none;font-size:13px">Home</a><button onclick="openAdd()" style="background:#4ade80;color:#052e16;border:0;padding:8px 16px;border-radius:999px;font-weight:800;cursor:pointer">+ Tambah</button></div></div>
-<div class="searchSection"><div class="searchWrap"><span>🔍</span><input id="searchInput" placeholder="Cari arit, motor..." oninput="doSearch()"><button class="btnCari" onclick="doSearch()">Cari</button></div></div>
-<div id="catBar" class="catBar"></div><div id="grid" class="grid"></div>
 
-<!-- MODAL DETAIL + PESAN VIA WA FONNTE -->
+<div class="header">
+  <div class="logo"><span>BWK</span> Pande Sawan</div>
+  <div style="display:flex;gap:14px;align-items:center">
+    <span id="stt" style="font-size:11px;color:#94a3b8">Loading...</span>
+    <a href="index.html" style="color:#fff;text-decoration:none;font-size:13px">Home</a>
+    <button onclick="openAdd()" style="background:#4ade80;color:#052e16;border:0;padding:8px 16px;border-radius:999px;font-weight:800;cursor:pointer">+ Tambah</button>
+  </div>
+</div>
+
+<div class="searchSection"><div class="searchWrap"><span>🔍</span><input id="searchInput" placeholder="Cari arit, motor, pisau..." oninput="doSearch()"><button class="btnCari" onclick="doSearch()">Cari</button></div></div>
+<div id="catBar" class="catBar"></div>
+<div id="grid" class="grid"></div>
+
+<!-- MODAL DETAIL + WA FONNTE -->
 <div id="mDet" class="modal" onclick="if(event.target==this)closeDet()"><div class="box">
 <div class="detLayout"><img id="dImg" class="detImg"><div class="detRight"><div id="dCat" class="catTag"></div><div id="dName" style="font-weight:800;font-size:18px;margin-top:8px"></div><div id="dPrice" style="color:#4ade80;font-weight:800;font-size:18px;margin-top:6px"></div><div id="dDesc" class="desc"></div></div></div>
-<div style="margin-top:14px;border-top:1px solid #1e2a33;padding-top:14px">
-<label>Nama Kamu</label><input id="custName" placeholder="Nama kamu">
-<label>No WA Kamu</label><input id="custWA" placeholder="62812xxxx">
-</div>
-<button class="btnWA" onclick="kirimFonnte()">📲 Pesan via WhatsApp (Fonnte)</button>
+<div style="margin-top:14px;border-top:1px solid #1e2a33;padding-top:14px"><label>Nama Kamu</label><input id="custName" placeholder="Nama kamu"><label>No WA Kamu</label><input id="custWA" placeholder="62812xxxx"></div>
+<button class="btnWA" onclick="kirimFonnte()">📲 Pesan via WhatsApp</button>
 <button onclick="closeDet()" style="width:100%;margin-top:10px;background:transparent;color:#94a3b8;border:1px solid #1e2a33;padding:10px;border-radius:10px;cursor:pointer">Tutup</button>
 </div></div>
 
-<!-- MODAL TAMBAH -->
+<!-- MODAL TAMBAH + ADA + DAN - DI SEBELAH KANAN KATEGORI -->
 <div id="mAdd" class="modal" onclick="if(event.target==this)closeAdd()"><div class="box">
 <h4 id="addTitle" style="margin:0 0 12px">Tambah Produk</h4>
-<div class="addLayout"><div class="addLeft"><label>Nama</label><input id="n"><label>Kategori</label><select id="cat"></select><label>Harga</label><input id="pr" type="number"><label>Stok</label><input id="qty" type="number"><label>Deskripsi</label><textarea id="ds" rows="3"></textarea><input id="f" type="file" accept="image/*"></div><div class="addRight"><img id="pv" style="display:none"><div id="pvEmpty" style="height:260px;border:1px dashed #1e2a33;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:11px">Preview</div></div></div>
+<div class="addLayout">
+  <div class="addLeft">
+    <label>Nama</label><input id="n" placeholder="Nama produk">
+
+    <label>Kategori</label>
+    <div style="display:flex;gap:8px;align-items:center;margin:5px 0 10px 0">
+      <select id="cat" style="flex:1;margin:0"></select>
+      <button onclick="tambahKat()" title="Tambah Kategori" style="width:44px;min-width:44px;height:44px;background:#0e1a14;border:1px solid #22c55e;color:#4ade80;border-radius:8px;font-weight:800;font-size:22px;cursor:pointer">+</button>
+      <button onclick="hapusKat()" title="Hapus Kategori" style="width:44px;min-width:44px;height:44px;background:#1a1010;border:1px solid #ef4444;color:#fca5a5;border-radius:8px;font-weight:800;font-size:22px;cursor:pointer">−</button>
+    </div>
+
+    <label>Harga</label><input id="pr" type="number" placeholder="25000">
+    <label>Stok</label><input id="qty" type="number" placeholder="10" value="10">
+    <label>Deskripsi</label><textarea id="ds" rows="3" placeholder="Deskripsi..."></textarea>
+    <input id="f" type="file" accept="image/*">
+  </div>
+  <div class="addRight"><img id="pv" style="display:none"><div id="pvEmpty" style="height:260px;border:1px dashed #1e2a33;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:11px;text-align:center">Preview<br>Foto</div></div>
+</div>
 <div style="display:flex;gap:8px;margin-top:14px"><button class="btn" id="sb" onclick="save()">Simpan</button><button class="btn" style="background:#1c2a36" onclick="closeAdd()">Batal</button></div>
 </div></div>
 
@@ -60,35 +87,31 @@ label{font-size:11px;color:#94a3b8}input,textarea,select{width:100%;background:#
 const DB_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-product";
 const WA_TOKEN="AHdnAppaZGYiKcaWt1JH"; const NOMOR_OWNER="6282340152478";
 let allData={}, curCatFilter='Semua', searchQuery='', img64='', editId=null, curProd=null;
-let categories=JSON.parse(localStorage.getItem('bwk_cats')||'["Arit","Lain","motor","Pisau"]');
+let categories=JSON.parse(localStorage.getItem('bwk_cats')||'["Arit","motor","Pisau","Sabit","Lain"]');
+
 function getParam(){return (new URLSearchParams(location.search).get('search')||'').toLowerCase().trim();}
 window.doSearch=()=>{searchQuery=document.getElementById('searchInput').value.toLowerCase().trim(); render();};
 window.filterCat=c=>{curCatFilter=c; searchQuery=c==='Semua'?'':c.toLowerCase(); document.getElementById('searchInput').value=c==='Semua'?'':c; render();};
-function renderCatBar(){const cats=['Semua',...new Set(Object.values(allData).map(p=>p.category||'Lain'))]; document.getElementById('catBar').innerHTML=cats.map(c=>`<button class="catBtn ${curCatFilter.toLowerCase()===c.toLowerCase()?'active':''}" onclick="filterCat('${c}')">${c}</button>`).join('');}
-function compress(file){return new Promise(res=>{const r=new FileReader(); r.onload=ev=>{const img=new Image(); img.onload=()=>{let w=img.width,h=img.height,max=600; if(w>max){h=h*(max/w);w=max} const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h); let q=0.6; let d=c.toDataURL('image/jpeg',q); while(d.length>65000&&q>0.2){q-=0.05; d=c.toDataURL('image/jpeg',q);} res(d);}; img.src=ev.target.result;}; r.readAsDataURL(file);});}
-document.getElementById('f').addEventListener('change', async e=>{const f=e.target.files[0]; if(!f) return; img64=await compress(f); document.getElementById('pv').src=img64; document.getElementById('pv').style.display='block'; document.getElementById('pvEmpty').style.display='none';});
-window.openAdd=()=>{editId=null; img64=''; document.getElementById('mAdd').classList.add('open'); document.getElementById('cat').innerHTML=categories.map(c=>`<option>${c}</option>`).join('');};
-window.closeAdd=()=>document.getElementById('mAdd').classList.remove('open');
-window.save=async()=>{const raw=document.getElementById('n').value.trim(), pr=document.getElementById('pr').value.trim(), qty=document.getElementById('qty').value.trim()||'10', ds=document.getElementById('ds').value.trim(), cat=document.getElementById('cat').value; if(!raw||!pr) return alert('Isi nama & harga'); if(!img64&&!editId) return alert('Pilih foto'); const id=editId||'prod_'+Date.now(); const payload={name:raw.startsWith('BWK')?raw:`BWK - ${raw}`,price:parseInt(pr),qty:parseInt(qty),category:cat,description:ds,image:img64||allData[editId].image,createdAt:Date.now()}; await fetch(DB_URL+"/"+id+".json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); closeAdd(); load();};
+function renderCatBar(){const cats=['Semua',...new Set([...categories,...Object.values(allData).map(p=>p.category||'Lain')])]; document.getElementById('catBar').innerHTML=cats.map(c=>`<button class="catBtn ${curCatFilter.toLowerCase()===c.toLowerCase()?'active':''}" onclick="filterCat('${c}')">${c}</button>`).join('');}
+function refreshCatDropdown(){const sel=document.getElementById('cat'); const cur=sel.value; sel.innerHTML=categories.map(c=>`<option ${c===cur?'selected':''} value="${c}">${c}</option>`).join(''); renderCatBar();}
+window.tambahKat=()=>{const nama=prompt('Nama kategori baru beb (contoh: Parang, Cangkul):'); if(!nama) return; const clean=nama.trim(); if(!clean) return; if(categories.map(x=>x.toLowerCase()).includes(clean.toLowerCase())) return alert('Kategori sudah ada beb!'); categories.push(clean); localStorage.setItem('bwk_cats', JSON.stringify(categories)); refreshCatDropdown(); document.getElementById('cat').value=clean; alert('✅ Kategori "'+clean+'" ditambah!');};
+window.hapusKat=()=>{const sel=document.getElementById('cat').value; if(!sel) return; if(categories.length<=1) return alert('Minimal 1 kategori beb!'); if(!confirm('Hapus kategori "'+sel+'" beb?')) return; categories=categories.filter(c=>c!==sel); localStorage.setItem('bwk_cats', JSON.stringify(categories)); refreshCatDropdown(); alert('🗑️ Kategori "'+sel+'" dihapus!');};
 
-// DETAIL + PESAN WA FONNTE - INI YANG KEMARIN HILANG BEB
+function compress(file){return new Promise(res=>{const r=new FileReader(); r.onload=ev=>{const img=new Image(); img.onload=()=>{let w=img.width,h=img.height,max=600; if(w>max){h=h*(max/w);w=max} const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h); let q=0.6; let d=c.toDataURL('image/jpeg',q); while(d.length>65000&&q>0.2){q-=0.05; d=c.toDataURL('image/jpeg',q);} res(d);}; img.src=ev.target.result;}; r.readAsDataURL(file);});}
+document.getElementById('f').addEventListener('change', async e=>{const file=e.target.files[0]; if(!file) return; img64=await compress(file); document.getElementById('pv').src=img64; document.getElementById('pv').style.display='block'; document.getElementById('pvEmpty').style.display='none';});
+
+window.openAdd=()=>{editId=null; img64=''; document.getElementById('n').value=''; document.getElementById('pr').value=''; document.getElementById('qty').value='10'; document.getElementById('ds').value=''; document.getElementById('pv').style.display='none'; document.getElementById('pvEmpty').style.display='flex'; document.getElementById('addTitle').textContent='Tambah Produk'; document.getElementById('cat').innerHTML=categories.map(c=>`<option value="${c}">${c}</option>`).join(''); document.getElementById('mAdd').classList.add('open');};
+window.closeAdd=()=>document.getElementById('mAdd').classList.remove('open');
+window.save=async()=>{const raw=document.getElementById('n').value.trim(); const pr=document.getElementById('pr').value.trim(); const qty=document.getElementById('qty').value.trim()||'10'; const ds=document.getElementById('ds').value.trim(); const cat=document.getElementById('cat').value; if(!raw||!pr) return alert('Isi nama & harga dulu beb!'); if(!img64&&!editId) return alert('Pilih foto dulu beb!'); const id=editId||'prod_'+Date.now(); const payload={name:raw.startsWith('BWK -')||raw.startsWith('BWK')?raw:`BWK - ${raw}`,price:parseInt(pr),qty:parseInt(qty),category:cat,description:ds,image:img64||(allData[editId]?.image||''),createdAt:allData[editId]?.createdAt||Date.now()}; document.getElementById('sb').textContent='Menyimpan...'; try{await fetch(DB_URL+"/"+id+".json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); closeAdd(); load();}catch(e){alert('Gagal simpan');} document.getElementById('sb').textContent='Simpan';};
+
 window.openDet=id=>{curProd={id,...allData[id]}; document.getElementById('dImg').src=curProd.image; document.getElementById('dCat').textContent=curProd.category; document.getElementById('dCat').className='catTag '+curProd.category; document.getElementById('dName').textContent=curProd.name; document.getElementById('dPrice').textContent='Rp '+(curProd.price||0).toLocaleString('id-ID'); document.getElementById('dDesc').textContent=curProd.description||'-'; document.getElementById('mDet').classList.add('open');};
 window.closeDet=()=>document.getElementById('mDet').classList.remove('open');
-window.kirimFonnte=async()=>{
-  const name=document.getElementById('custName').value.trim()||'Customer'; const wa=document.getElementById('custWA').value.trim();
-  if(!wa) return alert('Isi No WA dulu beb!');
-  const msg=`🔔 PESANAN BARU BWK - PANDE SAWAN\n\nProduk: *${curProd.name}*\nKategori: ${curProd.category}\nHarga: Rp ${(curProd.price||0).toLocaleString('id-ID')}\n\nPemesan: ${name}\nWA Pemesan: ${wa}\n\nVia Product Page (Fonnte)`;
-  try{
-    await fetch('https://api.fonnte.com/send',{method:'POST',headers:{'Authorization':WA_TOKEN},body:new URLSearchParams({target:NOMOR_OWNER,message:msg})});
-    alert('✅ Pesanan terkirim ke Pande via Fonnte! Kami segera balas via WA ya beb!');
-    closeDet();
-  }catch(e){alert('❌ Gagal kirim Fonnte: '+e.message);}
-};
+window.kirimFonnte=async()=>{const name=document.getElementById('custName').value.trim()||'Customer'; const wa=document.getElementById('custWA').value.trim(); if(!wa) return alert('Isi No WA dulu beb!'); const msg=`🔔 PESANAN BARU BWK\nProduk: *${curProd.name}*\nKategori: ${curProd.category}\nHarga: Rp ${(curProd.price||0).toLocaleString('id-ID')}\nPemesan: ${name}\nWA: ${wa}`; try{await fetch('https://api.fonnte.com/send',{method:'POST',headers:{'Authorization':WA_TOKEN},body:new URLSearchParams({target:NOMOR_OWNER,message:msg})}); alert('✅ Pesanan terkirim via Fonnte!'); closeDet();}catch(e){alert('❌ Gagal: '+e.message);}};
 
-async function load(){const init=getParam(); if(init){searchQuery=init; document.getElementById('searchInput').value=init; curCatFilter=init;} try{const r=await fetch(DB_URL+".json"); allData=await r.json()||{}; document.getElementById('stt').textContent=Object.keys(allData).length+' produk';}catch(e){allData=JSON.parse(localStorage.getItem('bwk_product')||'{}');} render();}
-function render(){renderCatBar(); let list=Object.entries(allData).map(([id,v])=>({id,...v})).sort((a,b)=>b.createdAt-a.createdAt); if(searchQuery) list=list.filter(p=>(p.category||'').toLowerCase().includes(searchQuery)||(p.name||'').toLowerCase().includes(searchQuery)); if(curCatFilter!=='Semua'&&!searchQuery) list=list.filter(p=>(p.category||'Lain').toLowerCase()===curCatFilter.toLowerCase()); document.getElementById('grid').innerHTML=list.map(p=>`<div class="prod" onclick="openDet('${p.id}')"><img src="${p.image}"><div class="inf"><span class="catTag ${p.category}">${p.category}</span><div class="nm">${p.name}</div><div class="pr">Rp ${(p.price||0).toLocaleString('id-ID')}</div><div class="stok">Stok: ${p.qty||1}</div></div><div class="act"><button class="btnEdit" onclick="event.stopPropagation(); editProd('${p.id}')">✏️ Edit</button><button class="btnDel" onclick="event.stopPropagation(); hapusProd('${p.id}')">🗑️ Hapus</button></div></div>`).join('');}
-window.editProd=id=>{const p=allData[id]; editId=id; document.getElementById('n').value=p.name.replace('BWK - ',''); document.getElementById('pr').value=p.price; document.getElementById('qty').value=p.qty||10; document.getElementById('ds').value=p.description||''; document.getElementById('cat').innerHTML=categories.map(c=>`<option ${c===p.category?'selected':''}>${c}</option>`).join(''); document.getElementById('pv').src=p.image; document.getElementById('pv').style.display='block'; document.getElementById('pvEmpty').style.display='none'; document.getElementById('mAdd').classList.add('open');};
-window.hapusProd=async id=>{if(!confirm('Hapus?')) return; await fetch(DB_URL+"/"+id+".json",{method:"DELETE"}); load();};
-document.addEventListener('DOMContentLoaded',()=>{const v=document.querySelector('.bg-video'); if(v){v.muted=true; v.play().catch(()=>{});}});
+async function load(){const initial=getParam(); if(initial){searchQuery=initial; document.getElementById('searchInput').value=initial; curCatFilter=initial;} try{const res=await fetch(DB_URL+".json"); allData=await res.json()||{}; document.getElementById('stt').textContent=Object.keys(allData).length+' produk';}catch(e){allData=JSON.parse(localStorage.getItem('bwk_product')||'{}'); document.getElementById('stt').textContent=Object.keys(allData).length+' produk (offline)';} render();}
+function render(){renderCatBar(); let list=Object.entries(allData).map(([id,v])=>({id,...v})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)); if(searchQuery){list=list.filter(p=>{const cat=(p.category||'').toLowerCase(); const name=(p.name||'').toLowerCase(); if(cat===searchQuery) return true; return cat.includes(searchQuery)||name.includes(searchQuery)||(p.description||'').toLowerCase().includes(searchQuery);});} if(curCatFilter!=='Semua'&&!searchQuery) list=list.filter(p=>(p.category||'Lain').toLowerCase()===curCatFilter.toLowerCase()); const grid=document.getElementById('grid'); if(list.length===0){grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:50px;color:#fff;background:rgba(0,0,0,.4);border-radius:16px">Gak ada hasil untuk "<b>${searchQuery||curCatFilter}</b>"<br><br><button onclick="location.href='product.html'" style="padding:10px 18px;border-radius:8px;border:0;background:#fff;color:#000;font-weight:700;cursor:pointer">Reset</button></div>`; return;} grid.innerHTML=list.map(p=>`<div class="prod" onclick="openDet('${p.id}')"><img src="${p.image}" loading="lazy"><div class="inf"><span class="catTag ${p.category}">${p.category||'Lain'}</span><div class="nm">${p.name}</div><div class="pr">Rp ${(p.price||0).toLocaleString('id-ID')}</div><div class="stok">Stok: ${p.qty||1}</div></div><div class="act"><button class="btnEdit" onclick="event.stopPropagation(); editProd('${p.id}')">✏️ Edit</button><button class="btnDel" onclick="event.stopPropagation(); hapusProd('${p.id}')">🗑️ Hapus</button></div></div>`).join('');}
+window.editProd=id=>{const p=allData[id]; editId=id; img64=''; document.getElementById('n').value=p.name.replace('BWK - ','').replace('BWK ',''); document.getElementById('pr').value=p.price; document.getElementById('qty').value=p.qty||10; document.getElementById('ds').value=p.description||''; document.getElementById('cat').innerHTML=categories.map(c=>`<option ${c===p.category?'selected':''} value="${c}">${c}</option>`).join(''); document.getElementById('pv').src=p.image; document.getElementById('pv').style.display='block'; document.getElementById('pvEmpty').style.display='none'; document.getElementById('addTitle').textContent='Edit Produk'; document.getElementById('mAdd').classList.add('open');};
+window.hapusProd=async id=>{if(!confirm('Hapus produk ini beb?')) return; await fetch(DB_URL+"/"+id+".json",{method:"DELETE"}); load();};
+document.addEventListener('DOMContentLoaded',()=>{const v=document.querySelector('.bg-video'); if(v){v.muted=true; const pr=v.play(); if(pr) pr.catch(()=>{document.addEventListener('click',()=>v.play(),{once:true});});}});
 load();
 </script></body></html>
