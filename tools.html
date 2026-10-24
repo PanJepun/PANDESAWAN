@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tools - PASAR PANDE SAWAN</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Poppins,Arial,sans-serif;background:#0a0a0a;color:#fff}
+.navbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#0a0a0a;border-bottom:1px solid #1e2a33;z-index:10}
+.logo{font-weight:800;font-size:16px}.logo span{display:block;font-weight:400;font-size:10px;letter-spacing:2px;opacity:.7}
+.nav-menu a{color:#fff;text-decoration:none;margin-left:14px;font-size:12px;opacity:.8}.nav-menu a.active{color:#FFB26B}
+.wrap{max-width:700px;margin:0 auto;padding:16px}
+.card{background:#151d23;border:1px solid #1e2a33;border-radius:16px;padding:16px;margin-bottom:12px}
+.card h3{font-size:16px;margin-bottom:4px}.card p{font-size:11px;color:#94a3b8;line-height:1.6;margin-bottom:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:10px 14px;border-radius:999px;border:1px solid #333;background:#1e2a33;color:#fff;cursor:pointer;font-size:12px;font-weight:700}
+.btnRed{background:#ff4444;border-color:#ff4444;color:#fff}.btnOrange{background:#ff6b00;border-color:#ff6b00;color:#fff}.btnYellow{background:#fbbf24;border-color:#fbbf24;color:#000}.btnMain{background:#FFB26B;border-color:#FFB26B;color:#000}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99;align-items:center;justify-content:center;padding:10px}.modal.show{display:flex}
+.modal-box{background:#151d23;color:#fff;border:1px solid #1e2a33;border-radius:18px;max-width:440px;width:100%;padding:20px;max-height:92vh;overflow:auto}
+.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:10px;border:1px solid #1e2a33;background:#0a0f13;color:#fff;border-radius:10px;margin-bottom:8px;font-size:13px;outline:none}
+.btn-send{width:100%;background:#FFB26B;color:#000;border:0;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;margin-top:6px}.btn-send:disabled{background:#333;color:#888;cursor:not-allowed}
+.btn-close{width:100%;margin-top:8px;padding:10px;border:1px solid #1e2a33;background:transparent;color:#94a3b8;border-radius:10px;cursor:pointer}
+.starBtn{font-size:30px;background:none;border:0;cursor:pointer;filter:grayscale(1);padding:2px}.starBtn.on{filter:none}
+.newRow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1e2a33}
+.newRow img{width:50px;height:50px;object-fit:cover;border-radius:8px}.newRowInfo{flex:1;min-width:0}.newRowInfo b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.newRowInfo small{color:#94a3b8;font-size:11px}
+.catDel{background:#ff4444;color:#fff;border:0;padding:7px 12px;border-radius:999px;font-size:11px;cursor:pointer;font-weight:700;white-space:nowrap}
+.previewBox{width:100%;height:200px;background:#0a0f13;border:1px dashed #333;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}.previewBox img,.previewBox video{width:100%;height:100%;object-fit:cover}
+.chooseBtn{width:100%;background:#1e2a33;color:#fff;border:1px dashed #666;padding:14px;border-radius:12px;cursor:pointer;font-size:13px;margin-bottom:8px}
+.progressBar{width:100%;height:10px;background:#0a0f13;border-radius:999px;overflow:hidden;margin:8px 0}.progressBar div{height:100%;background:#FFB26B;width:0%;transition:width .2s}
+.compressBox{background:#1a1400;border:1px solid #2a2000;border-radius:12px;padding:10px;margin:8px 0;font-size:11px;line-height:1.6}
+.bgRow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e2a33;gap:8px}
+.bgRow b{font-size:12px}.bgRow small{color:#94a3b8;font-size:11px}
+</style></head><body>
+<div class="navbar"><div class="logo">PASAR PANDE SAWAN<span>Desa Sawan • Buleleng</span></div><div class="nav-menu"><a href="index.html">Home</a><a href="tools.html" class="active">Tools</a><a href="product.html">Product</a><a href="gallery.html">Gallery</a></div></div>
+<div class="wrap">
+<h1 style="font-size:22px">🛠️ Tools Admin</h1><p style="font-size:12px;color:#94a3b8;margin:6px 0 16px" id="info">Semua tombol admin pindah kesini beb, Product jadi bersih beb.</p>
+
+<div class="card"><h3>🔥 Best Seller</h3><p>Produk paling laris beb. Di Product cuma muncul stiker nya aja beb, tombol nya disini beb.</p><div class="row"><button class="btn btnOrange" onclick="openKelolaBest()">Kelola Best Seller 1-1 (<span id="cBest">0</span>)</button><button class="btn btnRed" onclick="matikanSemuaBest()">Matikan Semua Best Seller</button></div></div>
+
+<div class="card"><h3>✨ New Comer</h3><p>Produk baru datang beb. Matikan 1-1 kalo udah lama beb.</p><div class="row"><button class="btn" style="background:#2a1111;border-color:#ff4444;color:#ff8a8a" onclick="openKelolaNew()">Kelola NEW 1-1 (<span id="cNew">0</span>)</button><button class="btn btnRed" onclick="matikanSemuaNew()">Matikan Semua NEW</button></div></div>
+
+<div class="card"><h3>⭐ Testimoni - Produk Terjual</h3><p>Gampang beb: Pilih produk -> Tap bintang -> Isi cerita -> Simpan beb. Gak usah mikir link beb!</p><div class="row"><button class="btn btnYellow" onclick="openTesti()">+ Tambah Testimoni</button><button class="btn" onclick="openTestiList()">Lihat Testimoni (<span id="cTesti">0</span>)</button></div><div id="testiMini" style="margin-top:10px"></div></div>
+
+<div class="card"><h3>🎥 Video / Foto - Auto Kompress</h3><p>Video kebesaran? Tenang beb! Otomatis dikompress beb, 30MB jadi 2MB beb, gak ditolak lagi beb! Foto juga dikompress beb, biar kecil beb!</p><div class="row"><button class="btn btnMain" onclick="openVideo()">+ Tambah Video / Foto - Choose File + Kompress</button><button class="btn" onclick="openVideoList()">Lihat Video / Foto (<span id="cVideo">0</span>)</button></div></div>
+
+<div class="card"><h3>🎬 Background Dashboard - Biar Gak Monoton</h3><p>Video jadi latar belakang Home beb, gerak-gerak di belakang beb, tulisan nya tetep jelas beb! Pilih 1 video beb, klik Jadikan Background beb!</p><p id="bgCurrent" style="color:#fbbf24;font-size:12px"></p><div id="bgList"></div><div class="row" style="margin-top:10px"><button class="btn btnRed" onclick="hapusBackground()">Hapus Background - Balik Item</button><button class="btn" onclick="location.href='index.html'">Lihat Home →</button></div></div>
+
+<div class="card"><h3>📦 Kategori & 👨‍🏭 Pande</h3><p>Kelola kategori + Pande beb, bisa hapus + ganti nama beb.</p><div class="row"><button class="btn" onclick="location.href='product.html'">Buka di Product → Kelola Kategori</button></div></div>
+
+<div class="card"><h3>➕ Tambah Produk</h3><p>Tambah produk baru beb.</p><div class="row"><button class="btn btnMain" onclick="location.href='product.html'">+ Tambah Produk</button></div></div>
+</div>
+
+<div id="kelolaModal" class="modal" onclick="if(event.target==this) closeModal('kelolaModal')"><div class="modal-box"><h3 id="kelolaTitle">Kelola</h3><div id="kelolaList"></div><button onclick="closeModal('kelolaModal')" class="btn-close">Tutup</button></div></div>
+
+<div id="testiModal" class="modal" onclick="if(event.target==this) closeModal('testiModal')"><div class="modal-box"><h3>⭐ Tambah Testimoni</h3><p style="font-size:11px;color:#94a3b8;margin:6px 0">Langkah 1: Pilih produk yang dibeli beb</p><select id="t_produk"></select><p style="font-size:11px;color:#94a3b8">Langkah 2: Nama customer beb</p><input id="t_nama" placeholder="Contoh: Made Sari"><input id="t_kota" placeholder="Kota - Contoh: Singaraja"><p style="font-size:11px;color:#94a3b8">Langkah 3: Tap bintang nya beb</p><div style="text-align:center"><button class="starBtn on" onclick="setStar(1)">⭐</button><button class="starBtn on" onclick="setStar(2)">⭐</button><button class="starBtn on" onclick="setStar(3)">⭐</button><button class="starBtn on" onclick="setStar(4)">⭐</button><button class="starBtn on" onclick="setStar(5)">⭐</button><p id="starInfo" style="font-size:11px;color:#fbbf24;margin-top:4px">5 Bintang - Puas Banget beb!</p></div><p style="font-size:11px;color:#94a3b8">Langkah 4: Cerita nya beb</p><textarea id="t_cerita" placeholder="Contoh: Kapak nya tajam banget beb, buat tebang kelapa gampang beb!"></textarea><button class="btn-send" style="background:#fbbf24" onclick="simpanTesti()">Simpan Testimoni</button><button onclick="closeModal('testiModal')" class="btn-close">Tutup</button></div></div>
+<div id="testiListModal" class="modal" onclick="if(event.target==this) closeModal('testiListModal')"><div class="modal-box"><h3>⭐ Semua Testimoni</h3><div id="testiList"></div><button onclick="closeModal('testiListModal')" class="btn-close">Tutup</button></div></div>
+
+<div id="videoModal" class="modal" onclick="if(event.target==this) closeModal('videoModal')"><div class="modal-box"><h3>🎥 Tambah Video / Foto + Kompress</h3>
+<p style="font-size:11px;color:#94a3b8;margin:6px 0">Langkah 1: Pilih Foto atau Video beb</p>
+<select id="v_tipe"><option value="foto">📷 Foto</option><option value="video">🎥 Video</option></select>
+<p style="font-size:11px;color:#94a3b8">Langkah 2: Judul beb</p><input id="v_judul" placeholder="Contoh: Tempa Keris Pande Sawan">
+<p style="font-size:11px;color:#94a3b8">Langkah 3: Klik Choose File beb, pilih dari HP beb</p>
+<button class="chooseBtn" onclick="document.getElementById('v_file').click()">📁 Choose File - Pilih Foto / Video dari HP</button>
+<input type="file" id="v_file" accept="image/*,video/*" onchange="previewFile(event)" style="display:none">
+<div class="previewBox" id="v_previewBox"><span style="font-size:11px;color:#666">Belum ada file beb, klik Choose File di atas beb</span></div>
+<p id="v_sizeInfo" style="font-size:11px;color:#94a3b8;margin:8px 0"></p>
+<div id="compressBox" class="compressBox" style="display:none">
+<b>⚙️ Kompress Video Otomatis beb!</b>
+<p id="compressText">Video nya gede beb, lagi dikecilin beb, tunggu bentar beb...</p>
+<div class="progressBar"><div id="compressBar"></div></div>
+<p id="compressResult" style="color:#4ade80"></p>
+<div style="display:flex;gap:8px;margin-top:8px">
+<button class="btn btnMain" onclick="startCompress()" id="btnCompress" style="flex:1">⚙️ Kompress Sekarang</button>
+<button class="btn" onclick="skipCompress()" id="btnSkip" style="flex:1">Pakai Asli Aja</button>
+</div>
+<p style="font-size:10px;color:#666;margin-top:6px">Kompress: 480p + suara tetep ada beb, masih jelas buat HP beb. Video 30MB jadi 2-3MB beb.</p>
+</div>
+<p style="font-size:11px;color:#94a3b8">Kualitas Kompress beb:</p>
+<select id="v_quality"><option value="480">480p - Paling Kecil, Buat HP (Hemat) - Disarankan beb</option><option value="720">720p - Sedang, Lebih Jelas beb</option><option value="360">360p - Paling Kecil Banget beb</option></select>
+<p style="font-size:11px;color:#94a3b8">Atau kalo video panjang banget beb, tempel link YouTube disini beb (opsional beb)</p>
+<input id="v_yt" placeholder="Link YouTube - boleh kosong beb">
+<button class="btn-send" onclick="simpanVideo()" id="btnSimpanVideo">Simpan Video / Foto</button>
+<button onclick="closeModal('videoModal')" class="btn-close">Tutup</button></div></div>
+<div id="videoListModal" class="modal" onclick="if(event.target==this) closeModal('videoListModal')"><div class="modal-box"><h3>🎥 Video / Foto</h3><div id="videoList"></div><button onclick="closeModal('videoListModal')" class="btn-close">Tutup</button></div></div>
+
+<script>
+const DB_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-product";
+const VIDEO_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-video";
+const FOTO_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-gallery";
+const TESTI_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-testimoni";
+const SETTING_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-setting";
+let allData={}, allTesti={}, allVideo={}, allFoto={}, curSetting={};
+let curBintang=5; let curFileData=''; let curFileType=''; let curFileObj=null; let curCompressedData=''; let isCompressing=false; let originalSize=0;
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+function isNewComer(p){ return p.isNew===true; }
+function isBest(p){ return p.isBestSeller===true; }
+function setStar(n){ curBintang=n; document.querySelectorAll('.starBtn').forEach((b,i)=>{ b.classList.toggle('on', i<n); }); document.getElementById('starInfo').innerText = n + " Bintang - " + (n===5?"Puas Banget beb!":n===4?"Puas beb!":n===3?"Lumayan beb!":n===2?"Kurang beb!":"Kecewa beb!"); }
+function openKelolaBest(){
+  const list=Object.entries(allData).filter(([id,p])=>isBest(p));
+  document.getElementById('kelolaTitle').innerText="Kelola Best Seller 1-1 beb";
+  document.getElementById('kelolaList').innerHTML = list.length ? list.map(([id,p])=>`<div class="newRow"><img src="${p.foto||''}" onerror="this.src='https://via.placeholder.com/100x100?text=BEST'"><div class="newRowInfo"><b>${p.nama||''}</b><small>${p.produsen||''}</small></div><button class="catDel" style="background:#ff6b00" onclick="matikanBestSatu('${id}')">Matikan</button></div>`).join('') : "<p style='font-size:12px;color:#94a3b8'>Belum ada Best Seller beb.</p>";
+  document.getElementById('kelolaModal').classList.add('show');
+}
+function openKelolaNew(){
+  const list=Object.entries(allData).filter(([id,p])=>isNewComer(p));
+  document.getElementById('kelolaTitle').innerText="Kelola NEW 1-1 beb";
+  document.getElementById('kelolaList').innerHTML = list.length ? list.map(([id,p])=>`<div class="newRow"><img src="${p.foto||''}" onerror="this.src='https://via.placeholder.com/100x100?text=NEW'"><div class="newRowInfo"><b>${p.nama||''}</b><small>${p.produsen||''}</small></div><button class="catDel" onclick="matikanNewSatu('${id}')">Matikan</button></div>`).join('') : "<p style='font-size:12px;color:#4ade80'>Sudah tidak ada NEW beb!</p>";
+  document.getElementById('kelolaModal').classList.add('show');
+}
+async function matikanBestSatu(id){ const p=allData[id]; if(!confirm('Matikan BEST SELLER di "'+(p.nama||'')+'" beb?')) return; await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({isBestSeller:false})}); allData[id].isBestSeller=false; refreshCounts(); openKelolaBest(); alert('BEST SELLER dimatikan beb!'); }
+async function matikanNewSatu(id){ const p=allData[id]; if(!confirm('Matikan NEW di "'+(p.nama||'')+'" beb?')) return; await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({isNew:false,createdAt:1577836800000})}); allData[id].isNew=false; refreshCounts(); openKelolaNew(); alert('NEW dimatikan beb!'); }
+async function matikanSemuaBest(){ const l=Object.entries(allData).filter(([id,p])=>isBest(p)); if(!l.length) return alert('Sudah tidak ada Best Seller beb!'); if(!confirm('Matikan '+l.length+' Best Seller sekaligus beb?')) return; for(const [id] of l){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({isBestSeller:false})}); allData[id].isBestSeller=false; } refreshCounts(); alert('Semua Best Seller dimatikan beb!'); }
+async function matikanSemuaNew(){ const l=Object.entries(allData).filter(([id,p])=>isNewComer(p)); if(!l.length) return alert('Sudah tidak ada NEW beb!'); if(!confirm('Matikan '+l.length+' NEW sekaligus beb?')) return; for(const [id] of l){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({isNew:false,createdAt:1577836800000})}); allData[id].isNew=false; } refreshCounts(); alert('Semua NEW dimatikan beb!'); }
+function openTesti(){ document.getElementById('t_produk').innerHTML = Object.values(allData).map(p=>`<option>${p.nama||p.name}</option>`).join('') || `<option>Produk Pande Sawan</option>`; setStar(5); document.getElementById('t_nama').value=''; document.getElementById('t_kota').value=''; document.getElementById('t_cerita').value=''; document.getElementById('testiModal').classList.add('show'); }
+function openTestiList(){ const list=Object.entries(allTesti); document.getElementById('testiList').innerHTML = list.length ? list.map(([id,t])=>`<div style="padding:10px 0;border-bottom:1px solid #1e2a33"><div style="color:#fbbf24">${'⭐'.repeat(Number(t.bintang||5))}</div><p style="font-size:12px;line-height:1.6;margin:6px 0">"${t.cerita||''}"</p><b>${t.nama||''}</b> <small style="color:#FFB26B">Beli: ${t.produk||''} • ${t.kota||''}</small><br><button onclick="hapusTesti('${id}')" style="background:#ff4444;color:#fff;border:0;padding:5px 10px;border-radius:999px;font-size:11px;cursor:pointer;margin-top:6px">Hapus</button></div>`).join('') : "<p style='font-size:12px;color:#94a3b8'>Belum ada testimoni beb.</p>"; document.getElementById('testiListModal').classList.add('show'); }
+async function simpanTesti(){ const nama=document.getElementById('t_nama').value.trim(); const kota=document.getElementById('t_kota').value.trim(); const produk=document.getElementById('t_produk').value; const cerita=document.getElementById('t_cerita').value.trim(); if(!nama||!cerita) return alert('Isi Nama + Cerita dulu beb!'); await fetch(TESTI_URL+".json",{method:"POST",body:JSON.stringify({nama,kota,produk,bintang:curBintang,cerita,createdAt:Date.now()})}); closeModal('testiModal'); await load(); alert('Testimoni tersimpan beb!'); }
+async function hapusTesti(id){ if(!confirm('Hapus testimoni ini beb?')) return; await fetch(TESTI_URL+"/"+id+".json",{method:"DELETE"}); await load(); openTestiList(); }
+// === BACKGROUND DASHBOARD BEB ===
+function renderBgList(){
+  const vl=Object.entries(allVideo);
+  const bisa = vl.filter(([id,v])=>v.url && !v.url.includes('youtube') && !v.url.includes('youtu.be'));
+  document.getElementById('bgCurrent').innerText = curSetting.backgroundJudul ? "Background sekarang beb: 🎥 " + curSetting.backgroundJudul : "Background sekarang beb: Belum dipilih beb, Home pakai video pertama beb";
+  document.getElementById('bgList').innerHTML = "<b style='font-size:12px'>🎥 Pilih Video Jadi Background Dashboard beb:</b>" + (bisa.length ? bisa.map(([id,v])=>`<div class="bgRow"><span><b>🎥 ${v.judul||'Video'}</b><br><small>${curSetting.backgroundJudul===(v.judul||'') ? '✅ Lagi dipakai jadi background beb' : 'Klik Jadikan Background beb'}</small></span><button class="btn btnMain" style="padding:7px 10px;font-size:11px;white-space:nowrap" onclick="setBackground('${id}')">Jadikan Background</button></div>`).join('') : "<p style='font-size:11px;color:#94a3b8'>Belum ada video file beb. Upload video dulu beb pakai Choose File beb, jangan YouTube beb, karena YouTube gak bisa jadi background beb!</p>");
+}
+async function setBackground(id){
+  const v=allVideo[id]; if(!v) return alert('Video tidak ketemu beb!');
+  if(!confirm('Jadikan "' + (v.judul||'Video') + '" jadi Background Dashboard beb?\n\nHome nya langsung hidup beb, ada video gerak-gerak di belakang beb!')) return;
+  await fetch(SETTING_URL+".json",{method:"PUT",body:JSON.stringify({backgroundVideo:v.url, backgroundJudul:v.judul||'Video Pande Sawan'})});
+  curSetting={backgroundVideo:v.url, backgroundJudul:v.judul||'Video Pande Sawan'};
+  renderBgList(); alert('Berhasil beb! Buka Home beb, video nya udah jadi background beb!');
+}
+async function hapusBackground(){
+  if(!confirm('Hapus Background beb? Balik ke item monoton beb?')) return;
+  await fetch(SETTING_URL+".json",{method:"PUT",body:JSON.stringify({backgroundVideo:"", backgroundJudul:""})});
+  curSetting={}; renderBgList(); alert('Background dihapus beb!');
+}
+// === VIDEO + KOMPRESS BEB ===
+function openVideo(){ curFileData=''; curCompressedData=''; curFileObj=null; originalSize=0; document.getElementById('v_judul').value=''; document.getElementById('v_yt').value=''; document.getElementById('v_previewBox').innerHTML='<span style="font-size:11px;color:#666">Belum ada file beb, klik Choose File di atas beb</span>'; document.getElementById('v_sizeInfo').innerText=''; document.getElementById('compressBox').style.display='none'; document.getElementById('btnSimpanVideo').disabled=false; document.getElementById('btnSimpanVideo').innerText='Simpan Video / Foto'; document.getElementById('videoModal').classList.add('show'); }
+function formatMB(b){ return (b/1024/1024).toFixed(1) + " MB"; }
+async function previewFile(e){
+  const f=e.target.files[0]; if(!f) return;
+  curFileObj=f; curFileData=''; curCompressedData=''; originalSize=f.size;
+  document.getElementById('v_sizeInfo').innerText = "File: " + f.name + " • " + formatMB(f.size);
+  document.getElementById('compressBox').style.display='none';
+  if(f.type.startsWith('image/')){
+    document.getElementById('v_tipe').value='foto';
+    const r=new FileReader(); r.onload=()=>{
+      const img=new Image(); img.onload=()=>{
+        const maxW=1000; let w=img.width, h=img.height;
+        if(w>maxW){ h=h*maxW/w; w=maxW; }
+        const c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h);
+        const compressed = c.toDataURL('image/jpeg', 0.75);
+        curFileData=compressed; curCompressedData=compressed;
+        document.getElementById('v_previewBox').innerHTML = `<img src="${compressed}">`;
+        document.getElementById('v_sizeInfo').innerText += " • Foto dikompress beb, jadi kecil beb!";
+      }; img.src=r.result;
+    }; r.readAsDataURL(f);
+    return;
+  }
+  if(f.type.startsWith('video/')){
+    document.getElementById('v_tipe').value='video';
+    const url=URL.createObjectURL(f);
+    document.getElementById('v_previewBox').innerHTML = `<video controls src="${url}"></video>`;
+    if(f.size/1024/1024 < 3){
+      const r=new FileReader(); r.onload=()=>{ curFileData=r.result; }; r.readAsDataURL(f);
+      document.getElementById('v_sizeInfo').innerText += " • Video udah kecil beb, gak usah kompress beb, langsung Simpan beb!";
+      return;
+    }
+    document.getElementById('compressBox').style.display='block';
+    document.getElementById('compressText').innerText = "Video nya " + formatMB(f.size) + " beb, gede beb! Lagi dikompress otomatis beb, tunggu bentar beb, jangan tutup beb...";
+    document.getElementById('compressBar').style.width='5%';
+    document.getElementById('compressResult').innerText='';
+    document.getElementById('btnSimpanVideo').disabled=true;
+    document.getElementById('btnSimpanVideo').innerText='⏳ Lagi Kompress, Tunggu Beb...';
+    setTimeout(startCompress, 500);
+  }
+}
+function skipCompress(){
+  const r=new FileReader(); r.onload=()=>{ curFileData=r.result; curCompressedData=''; document.getElementById('compressResult').innerText='Pakai video asli beb, tanpa kompress beb.'; document.getElementById('btnSimpanVideo').disabled=false; document.getElementById('btnSimpanVideo').innerText='Simpan Video / Foto'; }; r.readAsDataURL(curFileObj);
+}
+async function startCompress(){
+  if(!curFileObj || isCompressing) return;
+  isCompressing=true;
+  const btn=document.getElementById('btnCompress'); btn.disabled=true; btn.innerText='⏳ Lagi Kompress...';
+  try{
+    const quality = document.getElementById('v_quality').value;
+    const targetH = Number(quality);
+    const result = await compressVideo(curFileObj, targetH, (pct)=>{
+      document.getElementById('compressBar').style.width=pct+'%';
+      document.getElementById('compressText').innerText = "Lagi kompress beb... " + pct + "% - Jangan tutup beb!";
+    });
+    const newSize = result.size;
+    const hemat = Math.round((1 - newSize/originalSize)*100);
+    const r=new FileReader(); r.onload=()=>{
+      curCompressedData=r.result; curFileData=r.result;
+      document.getElementById('compressBar').style.width='100%';
+      document.getElementById('compressResult').innerText = `✅ Berhasil beb! ${formatMB(originalSize)} -> ${formatMB(newSize)} (Hemat ${hemat}% beb!) Video nya udah kecil beb, bisa Simpan beb!`;
+      document.getElementById('v_previewBox').innerHTML = `<video controls src="${r.result}"></video>`;
+      document.getElementById('v_sizeInfo').innerText = `Sesudah kompress: ${formatMB(newSize)} beb, hemat ${hemat}% beb!`;
+      document.getElementById('btnSimpanVideo').disabled=false;
+      document.getElementById('btnSimpanVideo').innerText='✅ Simpan Video Hasil Kompress';
+      btn.innerText='✅ Sudah Dikompress';
+    }; r.readAsDataURL(result);
+  }catch(err){
+    document.getElementById('compressText').innerText = "Kompress gagal beb: " + err.message + " - Coba pakai video yang lebih pendek beb, atau pakai link YouTube beb!";
+    document.getElementById('btnSimpanVideo').disabled=false;
+    document.getElementById('btnSimpanVideo').innerText='Simpan Video / Foto';
+    skipCompress();
+  }
+  isCompressing=false;
+}
+function compressVideo(file, targetH, onProgress){
+  return new Promise((resolve, reject)=>{
+    const url = URL.createObjectURL(file);
+    const video = document.createElement('video');
+    video.muted=true; video.playsInline=true; video.src=url;
+    video.onloadedmetadata = ()=>{
+      const scale = Math.min(1, targetH / video.videoHeight);
+      const w = Math.round(video.videoWidth * scale);
+      const h = Math.round(video.videoHeight * scale);
+      const canvas = document.createElement('canvas'); canvas.width=w; canvas.height=h;
+      const ctx = canvas.getContext('2d');
+      const stream = canvas.captureStream(30);
+      const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : MediaRecorder.isTypeSupported('video/webm') ? 'video/webm' : 'video/mp4';
+      const recorder = new MediaRecorder(stream, {mimeType: mime, videoBitsPerSecond: 600000});
+      const chunks=[];
+      recorder.ondataavailable = (e)=>{ if(e.data.size>0) chunks.push(e.data); };
+      recorder.onstop = ()=>{ URL.revokeObjectURL(url); resolve(new Blob(chunks, {type: mime})); };
+      video.onplay = ()=>{
+        const draw = ()=>{
+          if(video.ended || video.paused){ return; }
+          ctx.drawImage(video, 0, 0, w, h);
+          const pct = Math.round((video.currentTime / video.duration) * 100);
+          if(onProgress) onProgress(Math.min(99, pct));
+          requestAnimationFrame(draw);
+        };
+        draw();
+      };
+      video.onended = ()=>{ try{ recorder.stop(); }catch(e){} };
+      video.onerror = ()=> reject(new Error('Video tidak bisa dibaca beb'));
+      video.play().then(()=>{ recorder.start(500); }).catch(reject);
+      setTimeout(()=>{ if(recorder.state!=='inactive'){ try{ video.pause(); recorder.stop(); }catch(e){} } }, 95000);
+    };
+    video.onerror = ()=> reject(new Error('Video tidak bisa dibuka beb'));
+  });
+}
+async function simpanVideo(){
+  if(isCompressing) return alert('Lagi kompress beb, tunggu sampe 100% beb!');
+  const tipe=document.getElementById('v_tipe').value; const judul=document.getElementById('v_judul').value.trim(); const yt=document.getElementById('v_yt').value.trim();
+  let url = curCompressedData || curFileData;
+  if(yt && !url) url = yt;
+  if(!url) return alert('Klik Choose File dulu beb! Pilih foto / video dari HP beb!');
+  if(url.length > 4.5*1024*1024){
+    if(!confirm('Hasil nya masih gede beb.\n\nOK = Tetep simpan, coba aja beb\nCancel = Kompress lagi ke 360p beb')) return;
+    document.getElementById('v_quality').value='360';
+    await startCompress();
+    return;
+  }
+  const base = tipe==='video'?VIDEO_URL:FOTO_URL;
+  if(yt && tipe==='video' && !curFileData) url = yt;
+  document.getElementById('btnSimpanVideo').innerText='⏳ Menyimpan...'; document.getElementById('btnSimpanVideo').disabled=true;
+  try{
+    await fetch(base+".json",{method:"POST",body:JSON.stringify({judul:judul||'Video Pande Sawan',desc:'',url,createdAt:Date.now()})});
+    closeModal('videoModal'); await load(); alert('Tersimpan beb! Cek di Home + Gallery beb!');
+  }catch(e){ alert('Gagal simpan beb: '+e.message); document.getElementById('btnSimpanVideo').disabled=false; document.getElementById('btnSimpanVideo').innerText='Simpan Video / Foto'; }
+}
+function openVideoList(){
+  const vl=Object.entries(allVideo); const fl=Object.entries(allFoto);
+  document.getElementById('videoList').innerHTML = "<b>🎥 Video ("+vl.length+")</b>" + (vl.length ? vl.map(([id,v])=>`<div style="padding:10px 0;border-bottom:1px solid #1e2a33"><b>${v.judul||''}</b><br><button onclick="hapusVideo('${id}')" style="background:#ff4444;color:#fff;border:0;padding:5px 10px;border-radius:999px;font-size:11px;cursor:pointer;margin-top:6px">Hapus Video</button></div>`).join('') : "<p style='font-size:12px;color:#94a3b8'>Belum ada video beb.</p>") + "<br><b>📷 Foto ("+fl.length+")</b>" + (fl.length ? fl.map(([id,v])=>`<div style="padding:10px 0;border-bottom:1px solid #1e2a33"><b>${v.judul||''}</b><br><button onclick="hapusFoto('${id}')" style="background:#ff4444;color:#fff;border:0;padding:5px 10px;border-radius:999px;font-size:11px;cursor:pointer;margin-top:6px">Hapus Foto</button></div>`).join('') : "<p style='font-size:12px;color:#94a3b8'>Belum ada foto beb.</p>");
+  document.getElementById('videoListModal').classList.add('show');
+}
+async function hapusVideo(id){ if(!confirm('Hapus video ini beb?')) return; await fetch(VIDEO_URL+"/"+id+".json",{method:"DELETE"}); await load(); openVideoList(); }
+async function hapusFoto(id){ if(!confirm('Hapus foto ini beb?')) return; await fetch(FOTO_URL+"/"+id+".json",{method:"DELETE"}); await load(); openVideoList(); }
+function refreshCounts(){ document.getElementById('cBest').innerText = Object.values(allData).filter(p=>isBest(p)).length; document.getElementById('cNew').innerText = Object.values(allData).filter(p=>isNewComer(p)).length; document.getElementById('cTesti').innerText = Object.keys(allTesti).length; document.getElementById('cVideo').innerText = Object.keys(allVideo).length + Object.keys(allFoto).length; document.getElementById('info').innerText = Object.keys(allData).length + " produk • " + Object.values(allData).filter(p=>isBest(p)).length + " Best Seller • " + Object.values(allData).filter(p=>isNewComer(p)).length + " New • " + Object.keys(allTesti).length + " Testimoni • " + (Object.keys(allVideo).length+Object.keys(allFoto).length) + " Video/Foto"; document.getElementById('testiMini').innerHTML = Object.values(allTesti).slice(-2).map(t=>`<p style="font-size:11px;line-height:1.6;margin:6px 0">⭐ ${t.nama||''} - Beli ${t.produk||''}: "${(t.cerita||'').slice(0,60)}..."</p>`).join(''); renderBgList(); }
+async function load(){ try{ const r=await fetch(DB_URL+".json"); allData=await r.json()||{}; const rt=await fetch(TESTI_URL+".json"); allTesti=await rt.json()||{}; const rv=await fetch(VIDEO_URL+".json"); allVideo=await rv.json()||{}; const rf=await fetch(FOTO_URL+".json"); allFoto=await rf.json()||{}; const rs=await fetch(SETTING_URL+".json"); curSetting=await rs.json()||{}; }catch(e){} refreshCounts(); }
+load();
+</script></body></html>

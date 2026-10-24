@@ -1,129 +1,191 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PANDE SAWAN - Kerajinan Tangan</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PASAR PANDE SAWAN</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Poppins,Arial,sans-serif; background:#000; color:#fff; overflow-x:hidden}
-.navbar{position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:18px 28px; background:linear-gradient(to bottom, rgba(0,0,0,.8), transparent); z-index:10}
-.logo{font-weight:800; letter-spacing:1px; font-size:18px; line-height:1}
-.logo span{display:block; font-weight:400; font-size:10px; letter-spacing:3px; opacity:.8; margin-top:4px}
-.nav-menu a{color:#fff; text-decoration:none; margin-left:26px; font-size:13px; opacity:.8}
-.nav-menu a.active{opacity:1; color:#FFB26B; border-bottom:2px solid #FFB26B; padding-bottom:2px}
+body{font-family:Arial,sans-serif;background:#0a0a0a;color:#fff}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#0a0a0a;border-bottom:1px solid #222}
+.logo{font-weight:800;font-size:16px}
+.logo span{display:block;font-weight:400;font-size:10px;opacity:.7}
+.nav-menu a{color:#fff;text-decoration:none;margin-left:12px;font-size:12px}
+.nav-menu a.active{color:#FFB26B}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* VIDEO VERTIKAL FULL LAYAR - VERSI AMAN BEB */
+.topVideo{position:relative;width:100%;height:92vh;min-height:520px;background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.topVideo video.blurBg{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;filter:blur(20px);opacity:.6}
+.topVideo video.main{position:relative;z-index:1;height:100%;width:auto;max-width:100%;object-fit:contain}
+.topVideo iframe{width:100%;height:100%;border:0}
+.topInfo{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:14px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.9));display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.topInfo b{font-size:14px}
+.topInfo small{color:#ddd;font-size:11px;display:block}
+.vBtn{background:#222;color:#fff;border:1px solid #555;padding:9px 12px;border-radius:999px;font-size:11px;cursor:pointer}
+.vBtnMain{background:#FFB26B;color:#000;font-weight:800;border-color:#FFB26B}
+.scrollDown{position:absolute;left:50%;transform:translateX(-50%);bottom:80px;z-index:2;background:rgba(0,0,0,.6);color:#fff;border:1px solid #fff;padding:10px 18px;border-radius:999px;cursor:pointer}
+.hero{background:#151d23;border:1px solid #222;border-radius:20px;padding:28px 20px;margin:16px 0;text-align:center}
+.hero h1{font-size:28px;line-height:1.2}
+.hero h1 span{color:#FFB26B}
+.hero p{font-size:13px;color:#94a3b8;margin:10px auto;max-width:500px;line-height:1.6}
+.btn1{background:#FFB26B;color:#000;border:0;padding:13px 22px;border-radius:999px;font-weight:800;cursor:pointer}
+.btn2{background:transparent;color:#fff;border:1px solid #444;padding:13px 22px;border-radius:999px;cursor:pointer}
+.search{width:100%;padding:13px;border:1px solid #222;background:#000;color:#fff;border-radius:12px;margin:12px 0}
+.sec{margin:22px 0}
+.secHead{display:flex;justify-content:space-between;margin-bottom:12px}
+.secHead h2{font-size:18px}
+.secHead a{color:#FFB26B;font-size:12px;text-decoration:none}
+.hscroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px}
+.mcard{min-width:190px;max-width:190px;background:#151d23;border:1px solid #222;border-radius:16px;overflow:hidden;cursor:pointer;position:relative;flex-shrink:0}
+.mcard img{width:100%;height:140px;object-fit:cover}
+.mcardBody{padding:10px}
+.mcardBody b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcardBody small{color:#fbbf24;font-size:11px}
+.price{color:#FFB26B;font-weight:800;font-size:14px;margin-top:6px}
+.badge{position:absolute;top:8px;left:8px;font-size:9px;font-weight:800;padding:4px 8px;border-radius:999px}
+.badgeBest{background:#ff6b00}.badgeNew{background:#ff4444;top:32px}
+.catGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.catBox{background:#151d23;border:1px solid #222;border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer}
+.pandeRow{display:flex;gap:10px;overflow-x:auto}
+.pandeBox{min-width:150px;background:#1a1400;border:1px solid #2a2000;border-radius:14px;padding:14px;text-align:center;cursor:pointer;flex-shrink:0}
+.videoGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.videoBox{background:#151d23;border:1px solid #222;border-radius:16px;overflow:hidden}
+.videoBox video,.videoBox iframe{width:100%;height:220px;background:#000}
+.testiCard{min-width:280px;max-width:280px;background:#151d23;border:1px solid #222;border-radius:16px;padding:14px;flex-shrink:0}
+.waFloat{position:fixed;bottom:16px;right:16px;background:#25D366;color:#fff;border:0;padding:14px 18px;border-radius:999px;font-weight:800;cursor:pointer;z-index:20}
+.footer{text-align:center;color:#666;font-size:11px;padding:20px}
+@media(max-width:700px){.catGrid{grid-template-columns:repeat(2,1fr)}.videoGrid{grid-template-columns:1fr}.hero h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="navbar"><div class="logo">PASAR PANDE SAWAN<span>Desa Sawan - Buleleng</span></div><div class="nav-menu"><a href="index.html" class="active">Home</a><a href="tools.html">Tools</a><a href="product.html">Product</a><a href="gallery.html">Gallery</a></div></div>
 
-.hero{position:relative; width:100%; height:100vh; min-height:600px; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; background:#000}
-.hero-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:.7}
-.hero-overlay{position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.7)); z-index:1}
-.hero-content{position:relative; z-index:2; max-width:700px; padding:20px; margin-top:40px}
-.badge{display:inline-block; border:1px solid rgba(255,178,107,.6); color:#FFB26B; font-size:10px; letter-spacing:2px; padding:7px 14px; border-radius:20px; margin-bottom:22px; background:rgba(0,0,0,.3)}
-.hero h1{font-family:Georgia, serif; font-size:52px; line-height:1.1; font-weight:700; text-shadow:0 4px 20px rgba(0,0,0,.8); margin-bottom:18px}
-.hero p{font-size:15px; line-height:1.7; opacity:.85; max-width:600px; margin:0 auto 32px}
-.hero-actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
-.btn-koleksi{background:#FFB26B; color:#000; border:none; padding:13px 26px; border-radius:30px; font-size:13px; font-weight:800; cursor:pointer; display:flex; align-items:center; gap:8px}
-.btn-pande{background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.35); padding:13px 26px; border-radius:30px; font-size:13px; font-weight:700; cursor:pointer; backdrop-filter:blur(10px); display:flex; align-items:center; gap:8px}
-
-/* MODAL FONNTE - KAYAK PRODUCT */
-.modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:99; align-items:center; justify-content:center; padding:16px}
-.modal.show{display:flex}
-.modal-box{background:#151d23; color:#fff; border:1px solid #1e2a33; border-radius:18px; max-width:420px; width:100%; padding:22px}
-.modal-box h3{font-size:16px; margin-bottom:6px}
-.modal-box .sub{font-size:11px; color:#94a3b8; margin-bottom:14px}
-.modal-box input, .modal-box textarea{width:100%; padding:12px; border:1px solid #1e2a33; background:#0a0f13; color:#fff; border-radius:10px; margin-bottom:10px; font-size:13px; outline:none}
-.modal-box textarea{resize:none; height:80px}
-.btn-send{width:100%; background:#25D366; color:#fff; border:none; padding:13px; border-radius:12px; font-weight:800; cursor:pointer; margin-top:6px}
-.btn-close{width:100%; margin-top:8px; padding:11px; border:1px solid #1e2a33; background:transparent; color:#94a3b8; border-radius:10px; cursor:pointer}
-
-@media(max-width:700px){.hero h1{font-size:34px}.navbar{padding:14px 16px}.nav-menu a{margin-left:14px; font-size:11px}}
-</style></head><body>
-
-<div class="navbar">
-  <div class="logo">PANDE SAWAN<span>Kerajinan Tangan</span></div>
-  <div class="nav-menu">
-    <a href="index.html" class="active">Home</a>
-    <a href="product.html">Product</a>
-    <a href="gallery.html">Gallery</a>
-  </div>
+<div class="topVideo" id="topVideoWrap">
+<video id="blurVideo" class="blurBg" autoplay muted loop playsinline style="display:none"></video>
+<video id="mainVideo" class="main" autoplay muted loop playsinline controls style="display:none"></video>
+<iframe id="ytVideo" style="display:none" allowfullscreen></iframe>
+<div id="noVideo" style="text-align:center;padding:20px;position:relative;z-index:1"><div style="font-size:50px">🎥</div><b>Video Pande Sawan</b><br><small style="color:#94a3b8">Upload video vertikal di Tools beb</small></div>
+<button class="scrollDown" onclick="document.getElementById('heroBox').scrollIntoView({behavior:'smooth'})">⬇️ Lihat Produk Ke Bawah</button>
+<div class="topInfo"><div><b id="videoJudul">🎥 Video Pande Sawan</b><small id="videoInfo">Memuat video...</small></div><div><button class="vBtn" onclick="toggleVideo()" id="toggleBtn">⏸️ Pause</button> <button class="vBtn" onclick="nextVideo()">⏭️ Lain</button> <button class="vBtn vBtnMain" onclick="location.href='tools.html'">🎥 Ganti Video</button></div></div>
 </div>
 
-<div class="hero">
-  <video class="hero-video" autoplay muted loop playsinline preload="auto">
-    <source src="lempuyang.mp4" type="video/mp4">
-  </video>
-  <div class="hero-overlay"></div>
-  
-  <div class="hero-content">
-    <div class="badge">EST. 1960 • SAWAN, BULELENG, BALI</div>
-    <h1>Pande Buda Wage<br>Kelawu Sawan</h1>
-    <p>Warisan tempa besi turun-temurun dari Pande Sawan. Setiap bilah ditempa dengan mantra, doa, dan keahlian 60 tahun.</p>
-    
-    <div class="hero-actions">
-      <button class="btn-koleksi" onclick="location.href='product.html'">Lihat Koleksi <i class="fa fa-arrow-right"></i></button>
-      <button class="btn-pande" onclick="openFonnte()"><i class="fab fa-whatsapp"></i> Hubungi Pande</button>
-    </div>
-  </div>
+<div class="wrap">
+<div class="hero" id="heroBox"><div style="font-size:11px;color:#FFB26B;letter-spacing:2px">DESA SAWAN - BULELENG - BALI</div><h1>Asli Tempa Tangan<br><span>Pande Sawan</span></h1><p>Arit, Pisau, Keris, Kapak, langsung dari Pande nya beb. Bukan reseller beb, bukan pabrik beb. Ditempa api, dipukul tangan, tajam nya awet beb!</p><input class="search" id="homeSearch" placeholder="Cari arit, pisau, keris..." onkeydown="if(event.key==='Enter'){location.href='product.html?search='+encodeURIComponent(this.value)}"><div><button class="btn1" onclick="location.href='product.html'">Lihat Semua Produk</button> <button class="btn2" onclick="location.href='product.html?search=best'">🔥 Best Seller</button> <button class="btn2" onclick="location.href='product.html?search=new'">✨ Baru Datang</button></div><p id="homeInfo" style="font-size:11px;margin-top:12px">Memuat produk...</p></div>
+<div class="sec"><div class="secHead"><h2>🔥 Best Seller</h2><a href="product.html?search=best">Lihat Semua →</a></div><div class="hscroll" id="bestRow"><p style="font-size:12px;color:#94a3b8">Memuat...</p></div></div>
+<div class="sec"><div class="secHead"><h2>✨ New Comer</h2><a href="product.html?search=new">Lihat Semua →</a></div><div class="hscroll" id="newRow"><p style="font-size:12px;color:#94a3b8">Memuat...</p></div></div>
+<div class="sec"><div class="secHead"><h2>🎥 Video Lainnya</h2><a href="gallery.html">Semua Video →</a></div><div class="videoGrid" id="videoRow"></div></div>
+<div class="sec"><div class="secHead"><h2>📦 Kategori</h2></div><div class="catGrid" id="catGrid"></div></div>
+<div class="sec"><div class="secHead"><h2>👨‍🏭 Pande Kita</h2></div><div class="pandeRow" id="pandeRow"></div></div>
+<div class="sec"><div class="secHead"><h2>⭐ Testimoni</h2></div><div class="hscroll" id="testiRow"></div></div>
 </div>
-
-<!-- MODAL HUBUNGI PANDE - PAKAI FONNTE KAYAK PRODUCT -->
-<div id="fonnteModal" class="modal" onclick="if(event.target==this) closeFonnte()">
-  <div class="modal-box">
-    <h3><i class="fab fa-whatsapp" style="color:#c6df3b"></i> Hubungi Pande Sawan</h3>
-    
-    <input id="f_name" placeholder="Nama Kamu">
-    <input id="f_wa" placeholder="No WA Kamu (08xx / 628xx)">
-    <textarea id="f_msg">Halo Pande Sawan, saya mau tanya koleksi pisau & arit 🙏</textarea>
-    <button id="btnKirim" class="btn-send" onclick="kirimFonnteHome()">📲 Kirim via WhatsApp</button>
-    <p id="status" style="font-size:11px; text-align:center; margin-top:10px"></p>
-    <button onclick="closeFonnte()" class="btn-close">Tutup</button>
-  </div>
-</div>
+<button class="waFloat" onclick="window.open('https://wa.me/6282340152478?text=Halo Admin Pasar Pande Sawan!','_blank')">💬 Chat Admin</button>
+<div class="footer">PASAR PANDE SAWAN - Desa Sawan, Buleleng, Bali<br>Order via WhatsApp - COD Sawan Gratis</div>
 
 <script>
-const WA_TOKEN = "AHdnAppaZGYiKcaWt1JH";
-const NOMOR_OWNER = "6282340152478";
-
-function openFonnte(){ document.getElementById('fonnteModal').classList.add('show'); }
-function closeFonnte(){ document.getElementById('fonnteModal').classList.remove('show'); document.getElementById('status').innerHTML=''; }
-
-async function kirimFonnteHome(){
-  const nama=document.getElementById('f_name').value.trim();
-  const wa=document.getElementById('f_wa').value.trim();
-  const msg=document.getElementById('f_msg').value.trim();
-  if(!nama||!wa||!msg) return alert('Lengkapi nama, WA, dan pesan dulu beb!');
-  
-  const btn=document.getElementById('btnKirim'); 
-  const status=document.getElementById('status');
-  btn.innerText="Mengirim..."; btn.disabled=true; status.innerHTML="";
-
-  // FORMAT SAMA KAYAK DI PRODUCT.BEB
-  const pesan=`📩 CHAT HOMEPAGE - PANDE SAWAN\n\nNama: ${nama}\nWA Pemesan: ${wa}\nPesan: ${msg}\n\nVia Tombol Hubungi Pande (Fonnte)`;
-
+var DB_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-product";
+var VIDEO_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-video";
+var TESTI_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-testimoni";
+var SETTING_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-setting";
+var allVideos=[]; var curIdx=0; var isPaused=false;
+function formatRp(n){ return "Rp " + Number(n||0).toLocaleString('id-ID'); }
+function ytId(u){ var m=(u||'').match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/); return m?m[1]:''; }
+function showVideo(i){
   try{
-    const form=new FormData(); 
-    form.append('target', NOMOR_OWNER); 
-    form.append('message', pesan);
-    const res=await fetch('https://api.fonnte.com/send',{method:'POST', headers:{'Authorization':WA_TOKEN}, body:form});
-    const data=await res.json();
-    
-    if(data.status){
-      status.innerHTML="<span style='color:#4ade80'>✅ Terkirim ke Pande via Fonnte!</span>";
-      // AUTO REPLY KE PEMESAN (SAMA KAYAK PRODUCT)
-      let waFix = wa.replace(/^0/,'62').replace(/[^0-9]/g,'');
-      const form2=new FormData(); 
-      form2.append('target', waFix); 
-      form2.append('message', `Halo ${nama} 🙏\nPesan kamu sudah masuk ke Pande Sawan:\n"${msg}"\n\nKami segera balas ya! Terima kasih sudah hubungi Pande Buda Wage Kelawu Sawan - Sawan, Buleleng, Bali 🔥`);
-      fetch('https://api.fonnte.com/send',{method:'POST', headers:{'Authorization':WA_TOKEN}, body:form2});
-      setTimeout(()=>{closeFonnte();}, 2000);
-    }else{ 
-      status.innerHTML="<span style='color:#ff6b6b'>❌ Gagal: "+(data.reason||'cek device Fonnte')+"</span>"; 
+    if(!allVideos.length) return;
+    curIdx = i % allVideos.length;
+    var v = allVideos[curIdx];
+    document.getElementById('videoJudul').innerText = "🎥 " + (v.judul || 'Video Pande Sawan');
+    document.getElementById('videoInfo').innerText = (curIdx+1) + " dari " + allVideos.length + " video";
+    var main=document.getElementById('mainVideo');
+    var blur=document.getElementById('blurVideo');
+    var yt=document.getElementById('ytVideo');
+    var no=document.getElementById('noVideo');
+    no.style.display='none';
+    if(ytId(v.url)){
+      main.style.display='none'; blur.style.display='none'; yt.style.display='block';
+      yt.src="https://www.youtube.com/embed/"+ytId(v.url)+"?autoplay=1&mute=1&loop=1&playlist="+ytId(v.url);
+    }else{
+      yt.style.display='none'; main.style.display='block'; blur.style.display='block';
+      main.src=v.url; blur.src=v.url;
+      main.play().catch(function(){});
+      blur.play().catch(function(){});
     }
-  }catch(e){ 
-    status.innerHTML="<span style='color:#ff6b6b'>❌ Error: "+e.message+"</span>"; 
-  }
-  btn.innerText="📲 Kirim via WhatsApp"; btn.disabled=false;
+    isPaused=false;
+    document.getElementById('toggleBtn').innerText='⏸️ Pause';
+  }catch(e){ document.getElementById('videoInfo').innerText='Video error beb: '+e.message; }
 }
-
-// autoplay video di HP
-document.addEventListener('DOMContentLoaded', ()=>{
-  const v=document.querySelector('.hero-video');
-  if(v){ v.muted=true; v.play().catch(()=>{ document.addEventListener('click',()=>v.play(),{once:true}) }); }
-});
-</script></body></html>
+function toggleVideo(){
+  try{
+    var main=document.getElementById('mainVideo');
+    var blur=document.getElementById('blurVideo');
+    if(isPaused){ main.play(); blur.play(); document.getElementById('toggleBtn').innerText='⏸️ Pause'; isPaused=false; }
+    else{ main.pause(); blur.pause(); document.getElementById('toggleBtn').innerText='▶️ Play'; isPaused=true; }
+  }catch(e){}
+}
+function nextVideo(){ showVideo(curIdx+1); }
+function card(p){
+  var isBest=p.isBestSeller===true; var isNew=p.isNew===true;
+  return '<div class="mcard" onclick="location.href=\'product.html?search='+encodeURIComponent(p.nama||'')+'\'">'
+    + (isBest?'<span class="badge badgeBest">🔥 BEST</span>':'')
+    + (isNew?'<span class="badge badgeNew">NEW</span>':'')
+    + '<img src="'+(p.foto||'')+'" onerror="this.src=\'https://via.placeholder.com/400x300?text=Pande+Sawan\'">'
+    + '<div class="mcardBody"><b>'+(p.nama||'')+'</b><small>'+(p.produsen||'-')+'</small><div class="price">'+formatRp(p.harga||0)+'</div></div></div>';
+}
+async function loadAll(){
+  // VIDEO ATAS BEB - KALO GAGAL, TEKS TETEP MUNCUL BEB, GAK BLANK BEB
+  try{
+    var rs=await fetch(SETTING_URL+".json"); var setting=await rs.json()||{};
+    var rv=await fetch(VIDEO_URL+".json"); var vd=await rv.json()||{};
+    allVideos=Object.values(vd);
+    if(!allVideos.length){
+      document.getElementById('videoInfo').innerText='Belum ada video beb. Upload di Tools beb!';
+    }else{
+      var start=0;
+      if(setting.backgroundJudul){
+        for(var i=0;i<allVideos.length;i++){ if(allVideos[i].judul===setting.backgroundJudul){ start=i; break; } }
+      }
+      showVideo(start);
+      // Video lainnya beb
+      var html='';
+      for(var j=0;j<Math.min(4,allVideos.length);j++){
+        var v=allVideos[j];
+        if(ytId(v.url)){ html+='<div class="videoBox"><iframe src="https://www.youtube.com/embed/'+ytId(v.url)+'" allowfullscreen></iframe><div style="padding:12px"><b>'+(v.judul||'')+'</b></div></div>'; }
+        else{ html+='<div class="videoBox"><video controls src="'+v.url+'"></video><div style="padding:12px"><b>'+(v.judul||'')+'</b></div></div>'; }
+      }
+      document.getElementById('videoRow').innerHTML=html;
+    }
+  }catch(e){ document.getElementById('videoInfo').innerText='Video gagal load beb: '+e.message; }
+  // PRODUK BEB
+  try{
+    var r=await fetch(DB_URL+".json"); var data=await r.json()||{}; var list=Object.values(data);
+    document.getElementById('homeInfo').innerText=list.length+" produk";
+    var best=''; var news='';
+    for(var i=0;i<list.length;i++){
+      if(list[i].isBestSeller) best+=card(list[i]);
+      if(list[i].isNew) news+=card(list[i]);
+    }
+    document.getElementById('bestRow').innerHTML=best||"<p style='font-size:12px;color:#94a3b8'>Belum ada Best Seller beb.</p>";
+    document.getElementById('newRow').innerHTML=news||"<p style='font-size:12px;color:#94a3b8'>Belum ada New Comer beb.</p>";
+    var cats={};
+    for(var k=0;k<list.length;k++){ var c=list[k].category||list[k].kategori||'Lain'; cats[c]=(cats[c]||0)+1; }
+    var catHtml='';
+    for(var key in cats){ catHtml+='<div class="catBox" onclick="location.href=\'product.html?search='+encodeURIComponent(key)+'\'"><div>📦</div><b>'+key+'</b><small>'+cats[key]+' produk</small></div>'; }
+    document.getElementById('catGrid').innerHTML=catHtml;
+    var pandes={};
+    for(var p=0;p<list.length;p++){ if(list[p].produsen){ pandes[list[p].produsen]=(pandes[list[p].produsen]||0)+1; } }
+    var panHtml='';
+    for(var pk in pandes){ panHtml+='<div class="pandeBox" onclick="location.href=\'product.html?search='+encodeURIComponent(pk)+'\'"><div>👨‍🏭</div><b>'+pk+'</b><small>'+pandes[pk]+' produk</small></div>'; }
+    document.getElementById('pandeRow').innerHTML=panHtml;
+  }catch(e){ document.getElementById('homeInfo').innerText='Produk gagal load beb: '+e.message; }
+  // TESTIMONI BEB
+  try{
+    var rt=await fetch(TESTI_URL+".json"); var td=await rt.json()||{}; var tl=Object.values(td);
+    var th='';
+    for(var t=0;t<tl.length;t++){ th+='<div class="testiCard"><div style="color:#fbbf24">⭐⭐⭐⭐⭐</div><p>"'+(tl[t].cerita||'')+'"</p><b>'+(tl[t].nama||'')+'</b><br><small style="color:#FFB26B">Beli: '+(tl[t].produk||'')+'</small></div>'; }
+    document.getElementById('testiRow').innerHTML=th||"<p style='font-size:12px;color:#94a3b8'>Belum ada testimoni beb.</p>";
+  }catch(e){}
+}
+loadAll();
+</script>
+</body>
+</html>
