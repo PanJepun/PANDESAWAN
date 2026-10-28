@@ -74,9 +74,9 @@
 
 <div id="cartModal" class="modal" onclick="if(event.target==this) closeModal('cartModal')"><div class="modal-box"><h3>Keranjang Kamu</h3><div id="cartList" style="margin:12px 0"></div><p id="cartTotal" style="font-weight:800;color:#FFB26B"></p><input id="c_nama" placeholder="Nama Kamu"><input id="c_wa" placeholder="No WA Kamu (08xx / 628xx)"><textarea id="c_alamat" placeholder="Alamat Lengkap + Patokan"></textarea><select id="c_kirim"><option>Kirim JNE</option><option>Kirim GoSend</option><option>COD Sawan - Gratis</option><option>Ambil di Sawan</option></select><button id="btnCheckout" class="btn-send" onclick="checkout()">Kirim Pesanan via WhatsApp</button><p id="cartStatus" style="font-size:11px;text-align:center;margin-top:10px"></p><button onclick="closeModal('cartModal')" class="btn-close">Tutup</button></div></div>
 
-<div id="catModal" class="modal" onclick="if(event.target==this) closeModal('catModal')"><div class="modal-box"><h3>Kelola Kategori</h3><p style="font-size:11px;color:#94a3b8;margin:6px 0 12px">Bisa hapus + ganti nama kategori beb.</p><div style="display:flex;gap:8px;margin-bottom:12px"><input id="newCatInput" placeholder="Tambah kategori baru..." style="margin:0"><button onclick="tambahKategori()" style="background:#FFB26B;color:#000;border:0;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer;white-space:nowrap">+ Tambah</button></div><div id="catList"></div><button onclick="closeModal('catModal')" class="btn-close">Tutup</button></div></div>
+<div id="catModal" class="modal" onclick="if(event.target==this) closeModal('catModal')"><div class="modal-box"><h3>Kelola Kategori</h3><p style="font-size:11px;color:#94a3b8;margin:6px 0 12px">Bisa hapus + ganti nama kategori beb. Tersimpan di Firebase restopro2026 beb!</p><div style="display:flex;gap:8px;margin-bottom:12px"><input id="newCatInput" placeholder="Tambah kategori baru..." style="margin:0"><button onclick="tambahKategori()" style="background:#FFB26B;color:#000;border:0;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer;white-space:nowrap">+ Tambah</button></div><div id="catList"></div><button onclick="closeModal('catModal')" class="btn-close">Tutup</button></div></div>
 
-<div id="prodModal" class="modal" onclick="if(event.target==this) closeModal('prodModal')"><div class="modal-box"><h3>Kelola Produsen / Pande</h3><p style="font-size:11px;color:#94a3b8;margin:6px 0 12px">Bisa hapus + ganti nama Pande beb.</p><div style="display:flex;gap:8px;margin-bottom:12px"><input id="newProdInput" placeholder="Tambah Pande baru..." style="margin:0"><button onclick="tambahProdusen()" style="background:#fbbf24;color:#000;border:0;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer;white-space:nowrap">+ Tambah</button></div><div id="prodList"></div><button onclick="closeModal('prodModal')" class="btn-close">Tutup</button></div></div>
+<div id="prodModal" class="modal" onclick="if(event.target==this) closeModal('prodModal')"><div class="modal-box"><h3>Kelola Produsen / Pande</h3><p style="font-size:11px;color:#94a3b8;margin:6px 0 12px">Bisa hapus + ganti nama Pande beb. Tersimpan di Firebase restopro2026 beb!</p><div style="display:flex;gap:8px;margin-bottom:12px"><input id="newProdInput" placeholder="Tambah Pande baru..." style="margin:0"><button onclick="tambahProdusen()" style="background:#fbbf24;color:#000;border:0;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer;white-space:nowrap">+ Tambah</button></div><div id="prodList"></div><button onclick="closeModal('prodModal')" class="btn-close">Tutup</button></div></div>
 
 <div id="adminModal" class="modal" onclick="if(event.target==this) closeModal('adminModal')"><div class="modal-box adminWide">
 <h3 id="adminTitle" style="margin-bottom:12px">Tambah Produk Baru</h3>
@@ -106,16 +106,18 @@
 </div></div>
 
 <script>
-const DB_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-product";
-const TESTI_URL="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app/BWK-testimoni";
+const BASE="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app";
+const DB_URL=BASE+"/BWK-product";
+const CAT_URL=BASE+"/BWK-category";
+const PROD_URL=BASE+"/BWK-produsen";
+const TESTI_URL=BASE+"/BWK-testimoni";
 const WA_TOKEN="AHdnAppaZGYiKcaWt1JH"; const NOMOR_OWNER="6282340152478";
 let allData={}, allTesti={}, curCatFilter='Semua', searchQuery='', img64='', editId=null, curQty=1;
-let categories=JSON.parse(localStorage.getItem('bwk_cats')||'["Arit","Motor","Pisau","Sabit","Lain"]');
-let produsenList=JSON.parse(localStorage.getItem('bwk_produsen')||'[]');
+let categories=["Arit","Motor","Pisau","Sabit","Lain"];
+let produsenList=[];
 let curProdusenFilter='Semua Pande';
 let showNewOnly=false; let showBestOnly=false;
 let cart=[];
-// BARU BEB - GANTI BWK JADI PANDE SAWAN BEB, OTOMATIS BEB
 function cleanNama(n){ if(!n) return ''; let s=String(n).trim(); s=s.replace(/^BWK\s*[-–—:]*\s*/i,'PANDE SAWAN - '); s=s.replace(/\bBWK\b/gi,'PANDE SAWAN'); if(s.toUpperCase().startsWith('PANDE SAWAN -')) return s; if(s.toUpperCase().startsWith('PANDE SAWAN')) return s; return s; }
 function cleanProd(p){ if(!p || !String(p).trim() || String(p).trim()==='-') return 'Pande Sawan'; let s=String(p).trim(); s=s.replace(/\bBWK\b/gi,'Pande Sawan'); return s; }
 function formatRp(n){ return "Rp " + Number(n||0).toLocaleString('id-ID'); }
@@ -158,14 +160,25 @@ function renderProdusenBar(){
     return `<option value="${p}" ${curProdusenFilter===p?'selected':''}>${p==='Semua Pande'?'Semua Pande':p} (${jumlah})</option>`;
   }).join('');
 }
+// === FIX BEB: KATEGORI + PRODUSEN SEKARANG SAVE KE FIREBASE restopro2026 ===
+async function saveCatsToFB(){ try{ const obj={}; categories.forEach((c,i)=>obj['c'+i]={nama:c}); await fetch(CAT_URL+".json",{method:"PUT",body:JSON.stringify(obj)}); }catch(e){} }
+async function saveProdusenToFB(){ try{ const obj={}; produsenList.forEach((p,i)=>obj['p'+i]={nama:cleanProd(p)}); await fetch(PROD_URL+".json",{method:"PUT",body:JSON.stringify(obj)}); }catch(e){} }
+async function loadCatsProdusenFromFB(){
+  try{ const r=await fetch(CAT_URL+".json"); const d=await r.json(); if(d){ const arr=Object.values(d).map(x=>typeof x==='string'?x:x.nama).filter(Boolean); if(arr.length) categories=arr; } }catch(e){}
+  try{ const r=await fetch(PROD_URL+".json"); const d=await r.json(); if(d){ const arr=Object.values(d).map(x=>typeof x==='string'?x:cleanProd(x.nama)).filter(Boolean); if(arr.length) produsenList=arr; } }catch(e){}
+  // MIGRASI BEB: kalo Firebase masih kosong, ambil dari localStorage lama beb, terus save ke Firebase beb
+  if(categories.length<=5){ try{ const lama=JSON.parse(localStorage.getItem('bwk_cats')||'[]'); if(lama.length){ categories=[...new Set([...categories,...lama])]; await saveCatsToFB(); } }catch(e){} }
+  if(!produsenList.length){ try{ const lama=JSON.parse(localStorage.getItem('bwk_produsen')||'[]'); if(lama.length){ produsenList=lama.map(cleanProd); await saveProdusenToFB(); } }catch(e){} }
+  if(!categories.includes('buah-buahan') && !categories.includes('Buah-buahan')){ /* biarin, beb bisa tambah sendiri */ }
+}
 function openKelolaCat(){ const cats = getAllCats(); document.getElementById('catList').innerHTML = cats.map(c=>{ const jumlah = Object.values(allData).filter(p=>(p.category||p.kategori||'Lain')===c).length; return `<div class="catRow"><span><b>${c}</b><br><small>${jumlah} produk pakai kategori ini</small></span><span style="display:flex;gap:6px"><button class="catEdit" onclick="renameKategori('${c}')">Ganti Nama</button><button class="catDel" onclick="hapusKategori('${c}')">Hapus</button></span></div>`; }).join('') || "<p style='font-size:12px;color:#94a3b8'>Belum ada kategori beb.</p>"; document.getElementById('catModal').classList.add('show'); }
-function tambahKategori(){ const v=document.getElementById('newCatInput').value.trim(); if(!v) return alert('Isi nama kategori dulu beb!'); if(getAllCats().includes(v)) return alert('Kategori sudah ada beb!'); categories.push(v); localStorage.setItem('bwk_cats', JSON.stringify(categories)); document.getElementById('newCatInput').value=''; render(); openKelolaCat(); }
-async function hapusKategori(c){ const jumlah = Object.values(allData).filter(p=>(p.category||p.kategori||'Lain')===c).length; if(jumlah > 0){ if(!confirm("Kategori '" + c + "' masih ada " + jumlah + " produk beb!\n\nOK = Pindah semua ke 'Lain' + Hapus '" + c + "'\nCancel = Batal")) return; for(const [id,p] of Object.entries(allData)){ if((p.category||p.kategori||'Lain')===c){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({category:"Lain",kategori:"Lain"})}); } } } else{ if(!confirm("Hapus kategori '" + c + "' beb?")) return; } categories = categories.filter(x=>x!==c); localStorage.setItem('bwk_cats', JSON.stringify(categories)); if(curCatFilter===c){ curCatFilter='Semua'; searchQuery=''; document.getElementById('searchInput').value=''; } await loadData(); openKelolaCat(); alert("Kategori '" + c + "' terhapus beb!"); }
-async function renameKategori(c){ const baru = prompt("Ganti nama kategori '" + c + "' jadi apa beb?", c); if(!baru || baru===c) return; for(const [id,p] of Object.entries(allData)){ if((p.category||p.kategori||'Lain')===c){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({category:baru,kategori:baru})}); } } categories = categories.map(x=>x===c?baru:x); if(!categories.includes(baru)) categories.push(baru); localStorage.setItem('bwk_cats', JSON.stringify(categories)); await loadData(); openKelolaCat(); alert("Kategori diganti jadi '" + baru + "' beb!"); }
+async function tambahKategori(){ const v=document.getElementById('newCatInput').value.trim(); if(!v) return alert('Isi nama kategori dulu beb!'); if(getAllCats().includes(v)) return alert('Kategori sudah ada beb!'); categories.push(v); await saveCatsToFB(); document.getElementById('newCatInput').value=''; render(); openKelolaCat(); alert("Kategori '"+v+"' tersimpan ke Firebase restopro2026 beb!"); }
+async function hapusKategori(c){ const jumlah = Object.values(allData).filter(p=>(p.category||p.kategori||'Lain')===c).length; if(jumlah > 0){ if(!confirm("Kategori '" + c + "' masih ada " + jumlah + " produk beb!\n\nOK = Pindah semua ke 'Lain' + Hapus '" + c + "'\nCancel = Batal")) return; for(const [id,p] of Object.entries(allData)){ if((p.category||p.kategori||'Lain')===c){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({category:"Lain",kategori:"Lain"})}); } } } else{ if(!confirm("Hapus kategori '" + c + "' beb?")) return; } categories = categories.filter(x=>x!==c); await saveCatsToFB(); if(curCatFilter===c){ curCatFilter='Semua'; searchQuery=''; document.getElementById('searchInput').value=''; } await loadData(); openKelolaCat(); alert("Kategori '" + c + "' terhapus dari Firebase beb!"); }
+async function renameKategori(c){ const baru = prompt("Ganti nama kategori '" + c + "' jadi apa beb?", c); if(!baru || baru===c) return; for(const [id,p] of Object.entries(allData)){ if((p.category||p.kategori||'Lain')===c){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({category:baru,kategori:baru})}); } } categories = categories.map(x=>x===c?baru:x); if(!categories.includes(baru)) categories.push(baru); await saveCatsToFB(); await loadData(); openKelolaCat(); alert("Kategori diganti jadi '" + baru + "' di Firebase beb!"); }
 function openKelolaProd(){ const list = getAllProdusen(); document.getElementById('prodList').innerHTML = list.map(p=>{ const jumlah = Object.values(allData).filter(x=>cleanProd(x.produsen)===p).length; return `<div class="catRow"><span><b>${p}</b><br><small>${jumlah} produk dari Pande ini</small></span><span style="display:flex;gap:6px"><button class="catEdit" onclick="renameProdusen('${p}')">Ganti Nama</button><button class="catDel" onclick="hapusProdusen('${p}')">Hapus</button></span></div>`; }).join('') || "<p style='font-size:12px;color:#94a3b8'>Belum ada produsen beb.</p>"; document.getElementById('prodModal').classList.add('show'); }
-function tambahProdusen(){ const v=cleanProd(document.getElementById('newProdInput').value.trim()); if(!v) return alert('Isi nama Pande dulu beb!'); if(getAllProdusen().includes(v)) return alert('Pande sudah ada beb!'); produsenList.push(v); localStorage.setItem('bwk_produsen', JSON.stringify(produsenList)); document.getElementById('newProdInput').value=''; render(); openKelolaProd(); }
-async function hapusProdusen(p){ const jumlah = Object.values(allData).filter(x=>cleanProd(x.produsen)===p).length; if(jumlah > 0){ if(!confirm("Pande '" + p + "' masih ada " + jumlah + " produk beb!\n\nOK = Pindah semua ke 'Pande Lain' + Hapus '" + p + "'\nCancel = Batal")) return; for(const [id,pr] of Object.entries(allData)){ if(cleanProd(pr.produsen)===p){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({produsen:"Pande Lain"})}); } } } else{ if(!confirm("Hapus Pande '" + p + "' beb?")) return; } produsenList = produsenList.filter(x=>cleanProd(x)!==p); localStorage.setItem('bwk_produsen', JSON.stringify(produsenList)); if(cleanProd(curProdusenFilter)===p) curProdusenFilter='Semua Pande'; await loadData(); openKelolaProd(); alert("Pande '" + p + "' terhapus beb!"); }
-async function renameProdusen(p){ const baru = cleanProd(prompt("Ganti nama Pande '" + p + "' jadi apa beb?", p)); if(!baru || baru===p) return; for(const [id,pr] of Object.entries(allData)){ if(cleanProd(pr.produsen)===p){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({produsen:baru})}); } } produsenList = produsenList.map(x=>cleanProd(x)===p?baru:cleanProd(x)); if(!produsenList.includes(baru)) produsenList.push(baru); localStorage.setItem('bwk_produsen', JSON.stringify(produsenList)); await loadData(); openKelolaProd(); alert("Pande diganti jadi '" + baru + "' beb!"); }
+async function tambahProdusen(){ const v=cleanProd(document.getElementById('newProdInput').value.trim()); if(!v) return alert('Isi nama Pande dulu beb!'); if(getAllProdusen().includes(v)) return alert('Pande sudah ada beb!'); produsenList.push(v); await saveProdusenToFB(); document.getElementById('newProdInput').value=''; render(); openKelolaProd(); alert("Pande '"+v+"' tersimpan ke Firebase beb!"); }
+async function hapusProdusen(p){ const jumlah = Object.values(allData).filter(x=>cleanProd(x.produsen)===p).length; if(jumlah > 0){ if(!confirm("Pande '" + p + "' masih ada " + jumlah + " produk beb!\n\nOK = Pindah semua ke 'Pande Lain' + Hapus '" + p + "'\nCancel = Batal")) return; for(const [id,pr] of Object.entries(allData)){ if(cleanProd(pr.produsen)===p){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({produsen:"Pande Lain"})}); } } } else{ if(!confirm("Hapus Pande '" + p + "' beb?")) return; } produsenList = produsenList.filter(x=>cleanProd(x)!==p); await saveProdusenToFB(); if(cleanProd(curProdusenFilter)===p) curProdusenFilter='Semua Pande'; await loadData(); openKelolaProd(); alert("Pande '" + p + "' terhapus dari Firebase beb!"); }
+async function renameProdusen(p){ const baru = cleanProd(prompt("Ganti nama Pande '" + p + "' jadi apa beb?", p)); if(!baru || baru===p) return; for(const [id,pr] of Object.entries(allData)){ if(cleanProd(pr.produsen)===p){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({produsen:baru})}); } } produsenList = produsenList.map(x=>cleanProd(x)===p?baru:cleanProd(x)); if(!produsenList.includes(baru)) produsenList.push(baru); await saveProdusenToFB(); await loadData(); openKelolaProd(); alert("Pande diganti jadi '" + baru + "' di Firebase beb!"); }
 function refreshCatDropdown(){ const sel=document.getElementById('cat'); const cur=sel.value; sel.innerHTML=getAllCats().map(c=>`<option>${c}</option>`).join('') + `<option value="__baru__">+ Kategori Baru...</option>`; if(cur && getAllCats().includes(cur)) sel.value=cur; }
 function refreshProdusenDropdown(){ const gabung = getAllProdusen(); document.getElementById('a_produsen').innerHTML = gabung.map(p=>`<option>${p}</option>`).join('') || `<option>Pande Sawan</option>`; }
 function updatePreview(){ const val = document.getElementById('a_foto').value.trim(); const img = document.getElementById('a_preview'); const empty = document.getElementById('previewEmpty'); if(val && (val.startsWith('http') || val.startsWith('data:image') || val.includes('.jpg') || val.includes('.png') || val.includes('.jpeg') || val.includes('.webp'))){ img.src = val; img.style.display='block'; empty.style.display='none'; }else if(!val){ img.style.display='none'; empty.style.display='block'; empty.innerHTML="Belum ada foto beb"; } }
@@ -228,21 +241,24 @@ function editProduk(id){
 async function simpanProduk(){
   let nama=cleanNama(document.getElementById('a_nama').value.trim()); const harga=Number(document.getElementById('a_harga').value); const stok=Number(document.getElementById('a_stok').value||0);
   let kategori=document.getElementById('cat').value;
-  if(kategori==='__baru__'){ const baru=prompt('Nama Kategori Baru beb:'); if(!baru) return; kategori=baru; if(!categories.includes(kategori)){ categories.push(kategori); localStorage.setItem('bwk_cats', JSON.stringify(categories)); } }
+  if(kategori==='__baru__'){ const baru=prompt('Nama Kategori Baru beb:'); if(!baru) return; kategori=baru; if(!categories.includes(kategori)){ categories.push(kategori); await saveCatsToFB(); } }
   let prod=cleanProd(document.getElementById('a_produsen').value); const prodBaru=cleanProd(document.getElementById('a_produsenBaru').value.trim());
-  if(prodBaru && prodBaru!=='Pande Sawan'){ prod=prodBaru; if(!produsenList.includes(prod)){ produsenList.push(prod); localStorage.setItem('bwk_produsen', JSON.stringify(produsenList)); } }
+  if(prodBaru && prodBaru!=='Pande Sawan'){ prod=prodBaru; if(!produsenList.includes(prod)){ produsenList.push(prod); await saveProdusenToFB(); } }
   const foto=document.getElementById('a_foto').value.trim(); const desc=document.getElementById('a_desc').value.trim(); const isNew=document.getElementById('a_isNew').checked; const isBestSeller=document.getElementById('a_isBest').checked;
   if(!nama||!harga) return alert('Isi nama dan harga dulu beb!');
   try{
     if(editId){
       const data={nama,harga,stok,category:kategori,kategori:kategori,produsen:prod,foto,desc,isNew,isBestSeller};
       if(!isNew) data.createdAt = 1577836800000;
-      await fetch(DB_URL+"/"+editId+".json",{method:"PATCH",body:JSON.stringify(data)});
+      const r=await fetch(DB_URL+"/"+editId+".json",{method:"PATCH",body:JSON.stringify(data)});
+      if(!r.ok) throw new Error('Firebase nolak beb, cek Rules beb! '+r.status);
     } else {
       const data={nama,harga,stok,category:kategori,kategori:kategori,produsen:prod,foto,desc,isNew,isBestSeller,createdAt:Date.now()};
-      await fetch(DB_URL+".json",{method:"POST",body:JSON.stringify(data)});
+      const r=await fetch(DB_URL+".json",{method:"POST",body:JSON.stringify(data)});
+      if(!r.ok) throw new Error('Firebase nolak beb, cek Rules beb! '+r.status);
+      const j=await r.json(); console.log('Tersimpan ID beb:', j.name);
     }
-    closeModal('adminModal'); await loadData(); alert('Tersimpan ke Firebase beb!');
+    closeModal('adminModal'); await loadData(); alert('Tersimpan ke Firebase restopro2026 beb! ✅');
   }catch(e){ alert('Gagal simpan: '+e.message); }
 }
 async function hapusProduk(){ if(!editId) return; if(!confirm('Hapus produk ini beb?')) return; await fetch(DB_URL+"/"+editId+".json",{method:"DELETE"}); closeModal('adminModal'); await loadData(); alert('Terhapus beb!'); }
@@ -265,13 +281,13 @@ async function checkout(){
 async function loadTesti(){ try{ const r=await fetch(TESTI_URL+".json"); allTesti=await r.json()||{}; }catch(e){ allTesti={}; } }
 async function loadData(){
   try{
-    document.getElementById('dbStatus').innerText="Menghubungkan ke Firebase...";
+    document.getElementById('dbStatus').innerText="Menghubungkan ke Firebase restopro2026...";
+    await loadCatsProdusenFromFB();
     const res=await fetch(DB_URL+".json"); const data=await res.json();
     allData=data||{};
     const dariData = getProdusenDariData();
     produsenList = [...new Set([...produsenList.map(cleanProd), ...dariData])];
-    localStorage.setItem('bwk_produsen', JSON.stringify(produsenList));
-    document.getElementById('dbStatus').innerText="Terhubung ke Firebase - " + Object.keys(allData).length + " produk";
+    document.getElementById('dbStatus').innerText="Terhubung ke Firebase restopro2026 - " + Object.keys(allData).length + " produk • " + categories.length + " kategori";
     document.getElementById('dbStatus').style.color="#4ade80";
   }catch(e){ document.getElementById('dbStatus').innerText="Gagal ke Firebase: "+e.message; document.getElementById('dbStatus').style.color="#ff6b6b"; }
   await loadTesti();
