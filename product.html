@@ -8,15 +8,21 @@
 .nav-menu a{color:#fff;text-decoration:none;margin-left:14px;font-size:12px;opacity:.8}.nav-menu a.active{color:#FFB26B;opacity:1}
 .top{padding:16px;max-width:1100px;margin:0 auto}.top h1{font-size:22px}.top p{font-size:12px;color:#94a3b8;margin-top:4px}
 .search{width:100%;padding:12px;border:1px solid #1e2a33;background:#151d23;color:#fff;border-radius:10px;margin:14px 0 10px;outline:none}
-.catBar,.produsenBar,.filterBar{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;align-items:center;flex-wrap:wrap}
-.catBtn{white-space:nowrap;padding:8px 14px;border-radius:999px;border:1px solid #333;background:#151d23;color:#fff;cursor:pointer;font-size:12px}.catBtn.active{background:#FFB26B;color:#000;font-weight:800}
+.filterBar{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;align-items:center;flex-wrap:wrap}
+.filterRow{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:6px}
+.dropWrap{flex:1;min-width:150px;display:flex;flex-direction:column;gap:5px}
+.dropWrap label{font-size:11px;color:#94a3b8;font-weight:700}
+.dropWrap select{width:100%;padding:11px 12px;border:1px solid #333;background:#151d23;color:#fff;border-radius:10px;font-size:13px;outline:none;cursor:pointer}
+.dropWrap select:focus{border-color:#FFB26B}
+.kelolaWrap{display:flex;gap:8px;flex-wrap:wrap}
 .bestBtn{white-space:nowrap;padding:8px 14px;border-radius:999px;border:1px solid #ff6b00;background:#2a1500;color:#ffb26b;cursor:pointer;font-size:12px;font-weight:700}.bestBtn.active{background:#ff6b00;color:#fff}
 .newBtn{white-space:nowrap;padding:8px 14px;border-radius:999px;border:1px solid #ff4444;background:#2a1111;color:#ff8a8a;cursor:pointer;font-size:12px;font-weight:700}.newBtn.active{background:#ff4444;color:#fff}
-.kelolaBtn{white-space:nowrap;padding:8px 12px;border-radius:999px;border:1px dashed #666;background:transparent;color:#94a3b8;cursor:pointer;font-size:11px}
-.kelolaBtn2{white-space:nowrap;padding:8px 12px;border-radius:999px;border:1px dashed #fbbf24;background:transparent;color:#fbbf24;cursor:pointer;font-size:11px}
-.produsenBtn{white-space:nowrap;padding:8px 14px;border-radius:999px;border:1px solid rgba(251,191,36,.4);background:rgba(30,25,10,.65);color:#fbbf24;cursor:pointer;font-size:12px}.produsenBtn.active{background:#fbbf24;color:#000;font-weight:800}
+/* BARU BEB - TOMBOL TAMBAH DI ATAS BEB */
+.tambahBtn{white-space:nowrap;padding:8px 16px;border-radius:999px;border:0;background:#FFB26B;color:#000;cursor:pointer;font-size:12px;font-weight:800}
+.kelolaBtn{white-space:nowrap;padding:11px 12px;border-radius:10px;border:1px dashed #666;background:transparent;color:#94a3b8;cursor:pointer;font-size:11px}
+.kelolaBtn2{white-space:nowrap;padding:11px 12px;border-radius:10px;border:1px dashed #fbbf24;background:transparent;color:#fbbf24;cursor:pointer;font-size:11px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:0 16px 90px;max-width:1100px;margin:0 auto}
-@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:0 10px 90px}}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:0 10px 90px}.dropWrap{min-width:140px}}
 .card{background:#151d23;border:1px solid #1e2a33;border-radius:16px;overflow:hidden;cursor:pointer;position:relative}
 .card img{width:100%;height:160px;object-fit:cover;background:#222}.cardBody{padding:12px}.cardBody b{font-size:14px;display:block}
 .cardBody .prod{font-size:11px;color:#fbbf24;margin:4px 0}.cardBody .desc{font-size:11px;color:#94a3b8;line-height:1.5;height:32px;overflow:hidden}
@@ -35,7 +41,6 @@
 .btn-send{width:100%;background:#25D366;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;margin-top:6px}
 .btn-close{width:100%;margin-top:8px;padding:10px;border:1px solid #1e2a33;background:transparent;color:#94a3b8;border-radius:10px;cursor:pointer}
 .qty{display:flex;align-items:center;gap:10px;margin:10px 0}.qty button{width:34px;height:34px;border-radius:8px;border:1px solid #333;background:#0a0f13;color:#fff;cursor:pointer;font-size:16px}
-.adminBtn{position:fixed;bottom:16px;left:16px;background:#222;color:#888;border:1px solid #333;padding:8px 12px;border-radius:999px;font-size:11px;cursor:pointer;z-index:20}
 .adminWide{max-width:760px!important;padding:16px!important;overflow:hidden!important}
 .editGrid{display:grid;grid-template-columns:1fr 260px;gap:14px}.editLeft{display:flex;flex-direction:column}.editRight{display:flex;flex-direction:column}
 .previewBox{width:100%;height:190px;background:#0a0f13;border:1px dashed #333;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}.previewBox img{width:100%;height:100%;object-fit:cover}.previewBox span{font-size:11px;color:#666;text-align:center;padding:10px}
@@ -52,16 +57,18 @@
 <div class="top">
 <h1>Semua Produk Pande Sawan</h1><p id="dbStatus" style="color:#fbbf24">Menghubungkan ke Firebase...</p>
 <input id="searchInput" class="search" placeholder="Cari arit, pisau, keris, nama Pande..." oninput="doSearch()">
-<!-- BERSIH BEB - CUMA FILTER BUAT CUSTOMER BEB, GAK ADA TOMBOL ADMIN LAGI BEB -->
 <div class="filterBar" id="filterBar"></div>
-<div class="catBar" id="catBar"></div>
-<div class="produsenBar" id="produsenBar"></div>
+<div class="filterRow">
+  <div class="dropWrap"><label>📂 Kategori</label><select id="catSelect" onchange="filterCat(this.value)"></select></div>
+  <div class="dropWrap"><label>🔨 Produsen / Pande</label><select id="prodSelect" onchange="filterProdusen(this.value)"></select></div>
+  <div class="kelolaWrap"><button class="kelolaBtn" onclick="openKelolaCat()">⚙️ Kelola Kategori</button><button class="kelolaBtn2" onclick="openKelolaProd()">⚙️ Kelola Produsen</button></div>
+</div>
 <p id="hasilInfo" style="font-size:11px;color:#94a3b8;margin-top:4px"></p>
 <p style="font-size:11px;color:#666">Admin? Kelola Best Seller / NEW / Testimoni / Video di <a href="tools.html" style="color:#FFB26B">Tools</a> beb!</p>
 </div>
 <div id="grid" class="grid"></div>
 <button class="cartBtn" onclick="openCart()">Keranjang (<span id="cartCount">0</span>)</button>
-<button class="adminBtn" onclick="openAdmin()">+ Tambah Produk</button>
+<!-- TOMBOL BAWAH UDAH DIHAPUS BEB, PINDAH KE ATAS SEBELAH NEW COMER BEB -->
 
 <div id="welcomeModal" class="modal"><div class="modal-box" style="text-align:center"><div style="font-size:40px">👋</div><h3 style="margin:10px 0 6px">Selamat Datang di Pasar Pande Sawan!</h3><p style="font-size:12px;color:#94a3b8;line-height:1.7">Semua produk disini <b style="color:#fff">ditempa tangan Pande Sawan</b> beb, langsung dari Pande nya.<br><br>Lihat yang ada stiker <span style="background:#ff4444;color:#fff;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800">NEW</span> dan <span style="background:#ff6b00;color:#fff;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800">🔥 BEST SELLER</span> beb!</p><button class="btn-send" style="background:#FFB26B;color:#000" onclick="closeModal('welcomeModal'); localStorage.setItem('bwk_welcome','1')">Lihat Produk</button><button onclick="closeModal('welcomeModal'); localStorage.setItem('bwk_welcome','1')" class="btn-close">Lihat Semua Produk</button></div></div>
 
@@ -121,13 +128,12 @@ function isNewComer(p){ return p.isNew === true; }
 function isBest(p){ return p.isBestSeller === true; }
 function countNew(){ return Object.values(allData).filter(p=>isNewComer(p)).length; }
 function countBest(){ return Object.values(allData).filter(p=>isBest(p)).length; }
-// BERSIH BEB - CUMA FILTER BEB, GAK ADA KELOLA / MATIKAN LAGI BEB, SEMUA PINDAH KE TOOLS BEB
 function renderFilterBar(){
   document.getElementById('filterBar').innerHTML = `
     <button class="bestBtn ${showBestOnly?'active':''}" onclick="toggleBest()">🔥 Best Seller (${countBest()})</button>
     <button class="newBtn ${showNewOnly?'active':''}" onclick="toggleNew()">✨ New Comer (${countNew()})</button>
-    ${(showBestOnly||showNewOnly) ? `<button class="kelolaBtn" onclick="clearFilter()">✕ Lihat Semua</button>` : ''}
-    <span style="font-size:11px;color:#94a3b8">Klik untuk filter beb, klik lagi untuk balik beb</span>`;
+    <button class="tambahBtn" onclick="openAdmin()">+ Tambah Produk</button>
+    ${(showBestOnly||showNewOnly) ? `<button class="kelolaBtn" onclick="clearFilter()">✕ Lihat Semua</button>` : ''}`;
 }
 window.toggleBest = ()=>{ showBestOnly = !showBestOnly; if(showBestOnly) showNewOnly=false; render(); };
 window.toggleNew = ()=>{ showNewOnly = !showNewOnly; if(showNewOnly) showBestOnly=false; render(); };
@@ -135,8 +141,22 @@ window.clearFilter = ()=>{ showBestOnly=false; showNewOnly=false; render(); };
 function getAllCats(){ return [...new Set([...categories, ...Object.values(allData).map(p=>p.category||p.kategori||'Lain')])]; }
 function getProdusenDariData(){ return [...new Set(Object.values(allData).map(p=>(p.produsen||'').trim()).filter(Boolean))].sort(); }
 function getAllProdusen(){ return [...new Set([...getProdusenDariData(), ...produsenList])].sort(); }
-function renderCatBar(){ const cats=['Semua', ...getAllCats()]; document.getElementById('catBar').innerHTML = cats.map(c=>`<button class="catBtn ${curCatFilter===c?'active':''}" onclick="filterCat('${c}')">${c}</button>`).join('') + `<button class="kelolaBtn" onclick="openKelolaCat()">Kelola Kategori</button>`; }
-function renderProdusenBar(){ const list=['Semua Pande', ...getProdusenDariData()]; document.getElementById('produsenBar').innerHTML = list.map(p=>{ const jumlah = p==='Semua Pande' ? Object.keys(allData).length : Object.values(allData).filter(x=>(x.produsen||'')===p).length; return `<button class="produsenBtn ${curProdusenFilter===p?'active':''}" onclick="filterProdusen('${p}')">Produsen: ${p} (${jumlah})</button>`; }).join('') + `<button class="kelolaBtn2" onclick="openKelolaProd()">Kelola Produsen</button>`; }
+function renderCatBar(){
+  const cats=['Semua', ...getAllCats()];
+  const sel=document.getElementById('catSelect');
+  sel.innerHTML = cats.map(c=>{
+    const jumlah = c==='Semua' ? Object.keys(allData).length : Object.values(allData).filter(p=>(p.category||p.kategori||'Lain')===c).length;
+    return `<option value="${c}" ${curCatFilter===c?'selected':''}>${c==='Semua'?'Semua Kategori':c} (${jumlah})</option>`;
+  }).join('');
+}
+function renderProdusenBar(){
+  const list=['Semua Pande', ...getProdusenDariData()];
+  const sel=document.getElementById('prodSelect');
+  sel.innerHTML = list.map(p=>{
+    const jumlah = p==='Semua Pande' ? Object.keys(allData).length : Object.values(allData).filter(x=>(x.produsen||'')===p).length;
+    return `<option value="${p}" ${curProdusenFilter===p?'selected':''}>${p==='Semua Pande'?'Semua Pande':p} (${jumlah})</option>`;
+  }).join('');
+}
 function openKelolaCat(){ const cats = getAllCats(); document.getElementById('catList').innerHTML = cats.map(c=>{ const jumlah = Object.values(allData).filter(p=>(p.category||p.kategori||'Lain')===c).length; return `<div class="catRow"><span><b>${c}</b><br><small>${jumlah} produk pakai kategori ini</small></span><span style="display:flex;gap:6px"><button class="catEdit" onclick="renameKategori('${c}')">Ganti Nama</button><button class="catDel" onclick="hapusKategori('${c}')">Hapus</button></span></div>`; }).join('') || "<p style='font-size:12px;color:#94a3b8'>Belum ada kategori beb.</p>"; document.getElementById('catModal').classList.add('show'); }
 function tambahKategori(){ const v=document.getElementById('newCatInput').value.trim(); if(!v) return alert('Isi nama kategori dulu beb!'); if(getAllCats().includes(v)) return alert('Kategori sudah ada beb!'); categories.push(v); localStorage.setItem('bwk_cats', JSON.stringify(categories)); document.getElementById('newCatInput').value=''; render(); openKelolaCat(); }
 async function hapusKategori(c){ const jumlah = Object.values(allData).filter(p=>(p.category||p.kategori||'Lain')===c).length; if(jumlah > 0){ if(!confirm("Kategori '" + c + "' masih ada " + jumlah + " produk beb!\n\nOK = Pindah semua ke 'Lain' + Hapus '" + c + "'\nCancel = Batal")) return; for(const [id,p] of Object.entries(allData)){ if((p.category||p.kategori||'Lain')===c){ await fetch(DB_URL+"/"+id+".json",{method:"PATCH",body:JSON.stringify({category:"Lain",kategori:"Lain"})}); } } } else{ if(!confirm("Hapus kategori '" + c + "' beb?")) return; } categories = categories.filter(x=>x!==c); localStorage.setItem('bwk_cats', JSON.stringify(categories)); if(curCatFilter===c){ curCatFilter='Semua'; searchQuery=''; document.getElementById('searchInput').value=''; } await loadData(); openKelolaCat(); alert("Kategori '" + c + "' terhapus beb!"); }
