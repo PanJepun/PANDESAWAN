@@ -67,17 +67,11 @@
 </div>
 <div id="grid" class="grid"></div>
 <button class="cartBtn" onclick="openCart()">Keranjang (<span id="cartCount">0</span>)</button>
-
 <div id="welcomeModal" class="modal"><div class="modal-box" style="text-align:center"><div style="font-size:40px">👋</div><h3 style="margin:10px 0 6px">Selamat Datang di Pasar Pande Sawan!</h3><p style="font-size:12px;color:#94a3b8;line-height:1.7">Semua produk disini <b style="color:#fff">ditempa tangan Pande Sawan</b> beb, langsung dari Pande nya.<br><br>Lihat yang ada stiker <span style="background:#ff4444;color:#fff;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800">NEW</span> dan <span style="background:#ff6b00;color:#fff;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800">🔥 BEST SELLER</span> beb!</p><button class="btn-send" style="background:#FFB26B;color:#000" onclick="closeModal('welcomeModal'); localStorage.setItem('bwk_welcome','1')">Lihat Produk</button><button onclick="closeModal('welcomeModal'); localStorage.setItem('bwk_welcome','1')" class="btn-close">Lihat Semua Produk</button></div></div>
-
 <div id="detailModal" class="modal" onclick="if(event.target==this) closeModal('detailModal')"><div class="modal-box"><img id="d_img" style="width:100%;height:220px;object-fit:cover;border-radius:12px"><h3 id="d_nama" style="margin:12px 0 4px"></h3><p id="d_prod" style="color:#fbbf24;font-size:12px"></p><p id="d_desc" style="font-size:12px;color:#94a3b8;line-height:1.6;margin:8px 0"></p><div id="d_testi"></div><p id="d_harga" style="color:#FFB26B;font-weight:800;font-size:18px"></p><p id="d_stok" style="font-size:12px"></p><div class="qty"><button onclick="chgQty(-1)">-</button><span id="d_qty">1</span><button onclick="chgQty(1)">+</button><span style="font-size:11px;color:#94a3b8">Jumlah</span></div><button class="btn-send" style="background:#FFB26B;color:#000" onclick="addToCartFromDetail()">+ Tambah ke Keranjang</button><button class="btn-send" onclick="beliLangsung()">Beli Langsung via WA</button><button onclick="closeModal('detailModal')" class="btn-close">Tutup</button></div></div>
-
 <div id="cartModal" class="modal" onclick="if(event.target==this) closeModal('cartModal')"><div class="modal-box"><h3>Keranjang Kamu</h3><div id="cartList" style="margin:12px 0"></div><p id="cartTotal" style="font-weight:800;color:#FFB26B"></p><input id="c_nama" placeholder="Nama Kamu"><input id="c_wa" placeholder="No WA Kamu (08xx / 628xx)"><textarea id="c_alamat" placeholder="Alamat Lengkap + Patokan"></textarea><select id="c_kirim"><option>Kirim JNE</option><option>Kirim GoSend</option><option>COD Sawan - Gratis</option><option>Ambil di Sawan</option></select><button id="btnCheckout" class="btn-send" onclick="checkout()">Kirim Pesanan via WhatsApp</button><p id="cartStatus" style="font-size:11px;text-align:center;margin-top:10px"></p><button onclick="closeModal('cartModal')" class="btn-close">Tutup</button></div></div>
-
 <div id="catModal" class="modal" onclick="if(event.target==this) closeModal('catModal')"><div class="modal-box"><h3>Kelola Kategori</h3><p style="font-size:11px;color:#94a3b8;margin:6px 0 12px">Bisa hapus + ganti nama kategori beb. Tersimpan di Firebase restopro2026 beb!</p><div style="display:flex;gap:8px;margin-bottom:12px"><input id="newCatInput" placeholder="Tambah kategori baru..." style="margin:0"><button onclick="tambahKategori()" style="background:#FFB26B;color:#000;border:0;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer;white-space:nowrap">+ Tambah</button></div><div id="catList"></div><button onclick="closeModal('catModal')" class="btn-close">Tutup</button></div></div>
-
 <div id="prodModal" class="modal" onclick="if(event.target==this) closeModal('prodModal')"><div class="modal-box"><h3>Kelola Produsen / Pande</h3><p style="font-size:11px;color:#94a3b8;margin:6px 0 12px">Bisa hapus + ganti nama Pande beb. Tersimpan di Firebase restopro2026 beb!</p><div style="display:flex;gap:8px;margin-bottom:12px"><input id="newProdInput" placeholder="Tambah Pande baru..." style="margin:0"><button onclick="tambahProdusen()" style="background:#fbbf24;color:#000;border:0;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer;white-space:nowrap">+ Tambah</button></div><div id="prodList"></div><button onclick="closeModal('prodModal')" class="btn-close">Tutup</button></div></div>
-
 <div id="adminModal" class="modal" onclick="if(event.target==this) closeModal('adminModal')"><div class="modal-box adminWide">
 <h3 id="adminTitle" style="margin-bottom:12px">Tambah Produk Baru</h3>
 <div class="editGrid">
@@ -97,14 +91,13 @@
 <div class="previewBox" id="previewBox"><span id="previewEmpty">Belum ada foto beb</span><img id="a_preview" style="display:none" onerror="this.style.display='none'; document.getElementById('previewEmpty').style.display='block'"></div>
 <input id="a_foto" class="fotoInput" placeholder="Link Foto" oninput="updatePreview()" style="margin-top:8px">
 <input type="file" id="a_file" accept="image/*" onchange="uploadFoto(event)" style="padding:8px;font-size:11px">
-<p style="font-size:10px;color:#666;line-height:1.5">Bisa Choose File beb, atau tempel link foto beb. Foto lama aman beb, kalo gak diganti gak hilang beb.</p>
+<p style="font-size:10px;color:#666;line-height:1.5">Bisa Choose File beb, foto kegedean langsung auto kompres beb. Atau tempel link foto beb. Foto lama aman beb, kalo gak diganti gak hilang beb.</p>
 </div>
 </div>
 <button class="btn-send" style="background:#FFB26B;color:#000" onclick="simpanProduk()">Simpan ke Firebase</button>
 <button id="btnHapus" class="btn-send" style="background:#ff4444;display:none" onclick="hapusProduk()">Hapus Produk Ini</button>
 <button onclick="closeModal('adminModal')" class="btn-close">Tutup</button>
 </div></div>
-
 <script>
 const BASE="https://restopro2026-60038-default-rtdb.asia-southeast1.firebasedatabase.app";
 const DB_URL=BASE+"/BWK-product";
@@ -160,16 +153,39 @@ function renderProdusenBar(){
     return `<option value="${p}" ${curProdusenFilter===p?'selected':''}>${p==='Semua Pande'?'Semua Pande':p} (${jumlah})</option>`;
   }).join('');
 }
+// === AUTO KOMPRES BEB - Kalo foto kegedean langsung dikecilin, EDIT + TAMBAH sama beb ===
+async function kompresFotoBeb(dataUrl, maxKB=300){
+  return new Promise((res)=>{
+    if(!dataUrl || !dataUrl.startsWith('data:image')) return res(dataUrl);
+    if(dataUrl.length < maxKB*1024*1.37) return res(dataUrl);
+    const img=new Image();
+    img.onload=()=>{
+      let w=img.width, h=img.height;
+      let quality=0.75; let hasil=dataUrl;
+      for(let coba=0; coba<4; coba++){
+        const maxDim = coba===0?1000 : coba===1?800 : coba===2?600 : 450;
+        let nw=w, nh=h;
+        if(nw>maxDim || nh>maxDim){ const s=Math.min(maxDim/nw, maxDim/nh); nw=Math.round(nw*s); nh=Math.round(nh*s); }
+        const c=document.createElement('canvas'); c.width=nw; c.height=nh;
+        c.getContext('2d').drawImage(img,0,0,nw,nh);
+        hasil=c.toDataURL('image/jpeg', quality);
+        if(hasil.length < maxKB*1024*1.37) break;
+        quality-=0.15;
+      }
+      res(hasil);
+    };
+    img.onerror=()=>res(dataUrl);
+    img.src=dataUrl;
+  });
+}
 // === FIX BEB: KATEGORI + PRODUSEN SEKARANG SAVE KE FIREBASE restopro2026 ===
 async function saveCatsToFB(){ try{ const obj={}; categories.forEach((c,i)=>obj['c'+i]={nama:c}); await fetch(CAT_URL+".json",{method:"PUT",body:JSON.stringify(obj)}); }catch(e){} }
 async function saveProdusenToFB(){ try{ const obj={}; produsenList.forEach((p,i)=>obj['p'+i]={nama:cleanProd(p)}); await fetch(PROD_URL+".json",{method:"PUT",body:JSON.stringify(obj)}); }catch(e){} }
 async function loadCatsProdusenFromFB(){
   try{ const r=await fetch(CAT_URL+".json"); const d=await r.json(); if(d){ const arr=Object.values(d).map(x=>typeof x==='string'?x:x.nama).filter(Boolean); if(arr.length) categories=arr; } }catch(e){}
   try{ const r=await fetch(PROD_URL+".json"); const d=await r.json(); if(d){ const arr=Object.values(d).map(x=>typeof x==='string'?x:cleanProd(x.nama)).filter(Boolean); if(arr.length) produsenList=arr; } }catch(e){}
-  // MIGRASI BEB: kalo Firebase masih kosong, ambil dari localStorage lama beb, terus save ke Firebase beb
   if(categories.length<=5){ try{ const lama=JSON.parse(localStorage.getItem('bwk_cats')||'[]'); if(lama.length){ categories=[...new Set([...categories,...lama])]; await saveCatsToFB(); } }catch(e){} }
   if(!produsenList.length){ try{ const lama=JSON.parse(localStorage.getItem('bwk_produsen')||'[]'); if(lama.length){ produsenList=lama.map(cleanProd); await saveProdusenToFB(); } }catch(e){} }
-  if(!categories.includes('buah-buahan') && !categories.includes('Buah-buahan')){ /* biarin, beb bisa tambah sendiri */ }
 }
 function openKelolaCat(){ const cats = getAllCats(); document.getElementById('catList').innerHTML = cats.map(c=>{ const jumlah = Object.values(allData).filter(p=>(p.category||p.kategori||'Lain')===c).length; return `<div class="catRow"><span><b>${c}</b><br><small>${jumlah} produk pakai kategori ini</small></span><span style="display:flex;gap:6px"><button class="catEdit" onclick="renameKategori('${c}')">Ganti Nama</button><button class="catDel" onclick="hapusKategori('${c}')">Hapus</button></span></div>`; }).join('') || "<p style='font-size:12px;color:#94a3b8'>Belum ada kategori beb.</p>"; document.getElementById('catModal').classList.add('show'); }
 async function tambahKategori(){ const v=document.getElementById('newCatInput').value.trim(); if(!v) return alert('Isi nama kategori dulu beb!'); if(getAllCats().includes(v)) return alert('Kategori sudah ada beb!'); categories.push(v); await saveCatsToFB(); document.getElementById('newCatInput').value=''; render(); openKelolaCat(); alert("Kategori '"+v+"' tersimpan ke Firebase restopro2026 beb!"); }
@@ -182,7 +198,18 @@ async function renameProdusen(p){ const baru = cleanProd(prompt("Ganti nama Pand
 function refreshCatDropdown(){ const sel=document.getElementById('cat'); const cur=sel.value; sel.innerHTML=getAllCats().map(c=>`<option>${c}</option>`).join('') + `<option value="__baru__">+ Kategori Baru...</option>`; if(cur && getAllCats().includes(cur)) sel.value=cur; }
 function refreshProdusenDropdown(){ const gabung = getAllProdusen(); document.getElementById('a_produsen').innerHTML = gabung.map(p=>`<option>${p}</option>`).join('') || `<option>Pande Sawan</option>`; }
 function updatePreview(){ const val = document.getElementById('a_foto').value.trim(); const img = document.getElementById('a_preview'); const empty = document.getElementById('previewEmpty'); if(val && (val.startsWith('http') || val.startsWith('data:image') || val.includes('.jpg') || val.includes('.png') || val.includes('.jpeg') || val.includes('.webp'))){ img.src = val; img.style.display='block'; empty.style.display='none'; }else if(!val){ img.style.display='none'; empty.style.display='block'; empty.innerHTML="Belum ada foto beb"; } }
-function uploadFoto(e){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ img64=r.result; document.getElementById('a_foto').value=img64; updatePreview(); }; r.readAsDataURL(f); }
+function uploadFoto(e){
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=async ()=>{
+    let kecil = await kompresFotoBeb(r.result, 300);
+    img64=kecil;
+    document.getElementById('a_foto').value=kecil;
+    updatePreview();
+    if(r.result.length > kecil.length){ alert('Foto kegedean beb! Udah saya kompres otomatis beb dari '+Math.round(r.result.length/1024)+'KB jadi '+Math.round(kecil.length/1024)+'KB beb, aman buat save beb!'); }
+  };
+  r.readAsDataURL(f);
+}
 function render(){
   renderFilterBar(); renderCatBar(); renderProdusenBar(); refreshCatDropdown(); refreshProdusenDropdown();
   let list = Object.entries(allData).map(([id,v])=>({id,...v})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
@@ -244,18 +271,26 @@ async function simpanProduk(){
   if(kategori==='__baru__'){ const baru=prompt('Nama Kategori Baru beb:'); if(!baru) return; kategori=baru; if(!categories.includes(kategori)){ categories.push(kategori); await saveCatsToFB(); } }
   let prod=cleanProd(document.getElementById('a_produsen').value); const prodBaru=cleanProd(document.getElementById('a_produsenBaru').value.trim());
   if(prodBaru && prodBaru!=='Pande Sawan'){ prod=prodBaru; if(!produsenList.includes(prod)){ produsenList.push(prod); await saveProdusenToFB(); } }
-  const foto=document.getElementById('a_foto').value.trim(); const desc=document.getElementById('a_desc').value.trim(); const isNew=document.getElementById('a_isNew').checked; const isBestSeller=document.getElementById('a_isBest').checked;
+  let foto=document.getElementById('a_foto').value.trim(); const desc=document.getElementById('a_desc').value.trim(); const isNew=document.getElementById('a_isNew').checked; const isBestSeller=document.getElementById('a_isBest').checked;
   if(!nama||!harga) return alert('Isi nama dan harga dulu beb!');
+  // AUTO KOMPRES PAS SIMPAN BEB - EDIT + TAMBAH SAMA BEB
+  if(foto.startsWith('data:image') && foto.length > 400*1024){
+    alert('Foto kegedean beb ('+Math.round(foto.length/1024)+'KB beb), lagi saya kompres otomatis dulu beb, tunggu ya beb!');
+    foto = await kompresFotoBeb(foto, 300);
+    document.getElementById('a_foto').value=foto;
+    alert('Udah ke kompres beb jadi '+Math.round(foto.length/1024)+'KB beb, lanjut save ya beb!');
+  }
+  if(foto.length > 800*1024){ return alert('Foto masih kegedean beb walau udah dikompres beb! Pake foto lain yang lebih kecil beb, atau pake link foto beb!'); }
   try{
     if(editId){
       const data={nama,harga,stok,category:kategori,kategori:kategori,produsen:prod,foto,desc,isNew,isBestSeller};
       if(!isNew) data.createdAt = 1577836800000;
       const r=await fetch(DB_URL+"/"+editId+".json",{method:"PATCH",body:JSON.stringify(data)});
-      if(!r.ok) throw new Error('Firebase nolak beb, cek Rules beb! '+r.status);
+      if(!r.ok) throw new Error('Firebase nolak beb! Kode '+r.status+' beb. Kalo 400 = foto kegedean beb, hapus foto / kecilin dulu beb. Kalo 401/403 = Rules beb!');
     } else {
       const data={nama,harga,stok,category:kategori,kategori:kategori,produsen:prod,foto,desc,isNew,isBestSeller,createdAt:Date.now()};
       const r=await fetch(DB_URL+".json",{method:"POST",body:JSON.stringify(data)});
-      if(!r.ok) throw new Error('Firebase nolak beb, cek Rules beb! '+r.status);
+      if(!r.ok) throw new Error('Firebase nolak beb! Kode '+r.status+' beb. Kalo 400 = foto kegedean beb, hapus foto / kecilin dulu beb. Kalo 401/403 = Rules beb!');
       const j=await r.json(); console.log('Tersimpan ID beb:', j.name);
     }
     closeModal('adminModal'); await loadData(); alert('Tersimpan ke Firebase restopro2026 beb! ✅');
